@@ -1,0 +1,826 @@
+/**
+ * Admin styles for GGR Website Audit.
+ *
+ * Structure order (WordPress / CodeCanyon compliant):
+ * 1. Base admin layout
+ * 2. Analyzer header & score UI
+ * 3. Scan progress
+ * 4. Priority / audit results
+ * 5. Quick insights (stats)
+ * 6. Tooltips
+ * 7. Score breakdown & helpers
+ * 8. Loader & states
+ * 9. Responsive overrides (LAST)
+ *
+ * @package GGR_Website_Audit
+ * @since   2.3.0
+ */
+
+/* =====================================================
+ * 1. Base Admin Layout
+ * ===================================================== */
+
+.ggr-admin .ggr-card {
+  background: #ffffff;
+  padding: 20px;
+  margin-top: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+  overflow: visible;
+  box-shadow:
+  0 1px 2px rgba(0, 0, 0, 0.04),
+  0 4px 12px rgba(0, 0, 0, 0.04);
+   transition: all 0.25s ease;  
+}
+
+.ggr-admin .ggr-card::before {
+  content: '';
+  display: block;
+  height: 3px;
+  border-radius: 14px 14px 0 0;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  opacity: 0.6;
+  margin: -20px -20px 16px -20px;
+}
+
+
+
+.ggr-admin .ggr-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.06),
+    0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+
+/* Website Info Table Upgrade */
+.ggr-site-info table th {
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.ggr-site-info table td {
+  font-weight: 500;
+  color: #111827;
+}
+
+/* URL highlight */
+.ggr-site-info code {
+  background: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.ggr-last-audit {
+  color: #16a34a;
+  font-weight: 600;
+  background: #ecfdf5;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+
+
+.ggr-timezone-notice {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 12px 16px;
+  margin-bottom: 16px;
+
+  background: linear-gradient(90deg, #fff7ed, #fffbeb);
+  border: 1px solid #fde68a;
+  border-left: 5px solid #f59e0b;
+  border-radius: 10px;
+
+  font-size: 13.5px;
+  color: #92400e;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  animation: ggrNoticeFadeIn 0.4s ease;
+}
+
+
+/* Soft pulse glow */
+.ggr-timezone-notice::before {
+ content: '';
+  position: absolute;
+  left: -5px;
+  top: 0;
+  height: 100%;
+  width: 5px;
+  background: #f59e0b;
+  animation: ggrPulse 1.8s infinite;
+}
+
+/* Icon spacing */
+.ggr-notice-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ggr-timezone-notice a {
+  font-weight: 600;
+  color: #b45309;
+}
+
+.ggr-timezone-notice a:hover {
+  text-decoration: underline;
+}
+
+/* Close button */
+.ggr-notice-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+
+  width: 26px;
+  height: 26px;
+
+  background: #fff;
+  border: 1px solid #f59e0b;
+  border-radius: 6px;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+
+  color: #92400e;
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+
+/* Hover effect */
+.ggr-notice-close:hover {
+  background: #f59e0b;
+  color: #fff;
+  transform: scale(1.08);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.ggr-badge {
+  background: #f59e0b;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Subtle shake (very light) */
+.ggr-timezone-notice.ggr-attention {
+  animation: ggrShake 0.6s ease 2;
+}
+
+
+
+/* Pulse animation */
+@keyframes ggrPulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+/* Entry animation */
+@keyframes ggrNoticeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Micro shake (attention grab) */
+@keyframes ggrShake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+
+/* Link styling */
+.ggr-timezone-notice a {
+  font-weight: 600;
+  color: #b45309;
+  text-decoration: underline;
+}
+
+
+
+/* Subtle entrance animation */
+.ggr-card {
+  animation: ggrFadeUp 0.35s ease;
+}
+
+@keyframes ggrFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+  /* =====================================================
+  * 2. Analyzer Header (Score + Summary)
+  * ===================================================== */
+
+  .ggr-analyzer-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border-top: 4px solid transparent !important;
+    overflow: visible;
+  }
+
+  .ggr-score-pill {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: relative;
+  background: #f3f4f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+}
+
+
+/* Rotating gradient ring */
+.ggr-score-pill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 6px; 
+  background: conic-gradient(
+      var(--ggr-color),
+      var(--ggr-color)
+    );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  animation: ggrRotate 4s linear infinite;
+}
+
+/* Inner white circle */
+.ggr-score-pill::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  z-index: 1;
+}
+
+.ggr-score-inner {
+ 
+  z-index: 2;
+}
+
+/* Liquid height animation */
+.ggr-score-liquid {
+  
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  z-index: 3;
+  opacity: 0.75;
+  transition: height 1.5s ease-out;
+}
+
+/* Liquid fill (wave) */
+.ggr-score-liquid-fill {
+   position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ef4444;   
+  opacity: 0.25;         
+  border-radius: 50%; 
+ 
+}
+
+
+/* Score text */
+.ggr-score-number {
+  font-size: 36px;
+  font-weight: 700;
+  z-index: 3;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+/* Label */
+.ggr-score-pill small {
+  z-index: 3;
+  position: relative;
+}
+
+/* =========================
+   STATES
+========================= */
+
+/* GOOD */
+.ggr-good .ggr-score-number {
+  color: #22c55e;
+}
+
+/* MEDIUM */
+.ggr-medium .ggr-score-number {
+  color: #f59e0b;
+}
+
+/* POOR (RED + BLINK + GLOW) */
+.ggr-poor .ggr-score-number {
+  color: #ef4444;
+  animation: ggrBlink 1s infinite;
+}
+
+.ggr-poor .ggr-score-pill {
+  animation: ggrPulseRed 1.5s infinite;
+}
+
+/* Blink */
+@keyframes ggrBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Glow */
+@keyframes ggrPulseRed {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+  }
+}
+/* =====================================================
+ * 3. Scan Progress
+ * ===================================================== */
+
+.ggr-scan-progress {
+  margin-top: 8px;
+}
+
+.ggr-progress-bar {
+  width: 220px;
+  height: 6px;
+  background: #e5e5e5;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.ggr-progress-bar span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #f39c12, #2ecc71);
+  transition: width 0.8s ease;
+}
+
+.ggr-progress-text {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+/* =====================================================
+ * 4. Audit Results – Premium Cards
+ * ===================================================== */
+
+.ggr-priority-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Card wrapper */
+.ggr-audit-card {
+  list-style: none;
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  border-left: 5px solid transparent;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* Card header */
+.ggr-audit-card-header {
+  padding-bottom: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #111827;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ggr-analyzer-header.ggr-good {
+  border-top-color: #22c55e;
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.12);
+}
+
+.ggr-analyzer-header.ggr-medium {
+  border-top-color: #f59e0b;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.12);
+}
+
+.ggr-analyzer-header.ggr-poor {
+  border-top-color: #ef4444;
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.14);
+}
+
+.ggr-audit-card-header::before {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+
+.ggr-top-audit-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px 14px;
+  margin: 10px 0;
+
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+}
+
+.ggr-scan-btn {
+  font-weight: 600;
+}
+
+.ggr-score-badge {
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+/* Card list */
+.ggr-audit-card-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.ggr-audit-card-list li {
+  padding: 4px 0;
+  line-height: 1.6;
+  margin-bottom: 6px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #374151;
+}
+
+/* Success icon */
+.ggr-audit-card.ggr-success .ggr-audit-card-header::before {
+  content: "✓";
+  background: rgba(46, 204, 113, 0.15);
+  color: #1e7e34;
+}
+
+/* Warning icon */
+.ggr-audit-card.ggr-warning .ggr-audit-card-header::before {
+  content: "!";
+  background: rgba(241, 196, 15, 0.2);
+  color: #b45309;
+}
+
+/* Critical icon */
+.ggr-audit-card.ggr-critical .ggr-audit-card-header::before {
+  content: "✕";
+  background: rgba(231, 76, 60, 0.18);
+  color: #b91c1c;
+}
+
+/* Color variants */
+.ggr-audit-card.ggr-critical {
+  background: #fff5f4;
+  border-left-color: #e74c3c;
+  box-shadow: 0 6px 18px rgba(231, 76, 60, 0.22);
+  border: 1px solid rgba(231, 76, 60, 0.45);
+}
+
+.ggr-audit-card.ggr-critical .ggr-audit-card-header {
+  color: #b42318;
+}
+
+.ggr-audit-card.ggr-warning {
+  background: #fffbea7a;
+  border-left-color: #f1c40f;
+  box-shadow: 0 4px 12px rgba(241, 196, 15, 0.18);
+  border: 1px solid rgba(241, 196, 15, 0.45);
+}
+
+.ggr-audit-card.ggr-warning .ggr-audit-card-header {
+  color: #92400e;
+}
+
+.ggr-audit-card.ggr-success {
+  background: #f3fcf7;
+  border-left-color: #2ecc71;
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.15);
+  border: 1px solid rgba(46, 204, 113, 0.35);
+}
+
+.ggr-audit-card.ggr-success .ggr-audit-card-header {
+  color: #166534;
+}
+
+.ggr-audit-actions {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #ddd;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.ggr-audit-actions a {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.ggr-action-view {
+  color: #2271b1;
+}
+
+.ggr-action-edit {
+  color: #1d2327;
+  background: #f0f6fc;
+  border: 1px solid #c3d4ea;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.ggr-action-edit span {
+  font-size: 18px;
+  color: #555;
+}
+
+
+#wp-admin-bar-ggrwa-scan-page > a {
+  font-weight: 600;
+  color: #22c55e !important;
+}
+
+/* =====================================================
+ * 5. Quick Insights – Stat Cards
+ * ===================================================== */
+
+.ggr-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 12px;
+  overflow: visible;
+}
+
+.ggr-stat-item {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px 12px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ggr-stat-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.ggr-stat-item:last-child {
+  grid-column: 1 / -1;
+}
+
+.ggr-stat-item strong {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #111827;
+}
+
+.ggr-stat-label {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.ggr-stat-item.ggr-has-warning strong {
+  color: #d97706;
+}
+
+.ggr-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* Base Button */
+.ggr-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none !important; 
+    line-height: 1;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+/* Edit Button (Primary) */
+.ggr-btn-edit {
+    background: linear-gradient(135deg, #2271b1, #135e96);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(34, 113, 177, 0.25);
+}
+
+/* View Button (Secondary clean) */
+.ggr-btn-view {
+    background: #f8fafc;
+    color: #1e293b;
+    border: 1px solid #e2e8f0;
+}
+
+/* Hover Effects */
+.ggr-btn:hover {
+    transform: translateY(-1px);
+    text-decoration: none !important;
+}
+
+/* Hover specific */
+.ggr-btn-edit:hover {
+    background: linear-gradient(135deg, #1d4f91, #0f4c81);
+    color:#FFF;
+}
+
+.ggr-btn-view:hover {
+    background: #f1f5f9;
+}
+
+
+/* =====================================================
+ * 6. Tooltips (WordPress-safe)
+ * ===================================================== */
+
+.ggr-stat-item[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(17, 24, 39, 0.95);
+  color: #ffffff;
+  padding: 8px 12px;
+  font-size: 12px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 999999;
+}
+
+.ggr-stat-item[data-tooltip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.ggr-tooltip-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  background: #f3f4f6;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ggr-tooltip-trigger:hover {
+  background: #111827;
+  color: #ffffff;
+}
+
+.ggr-tooltip-box {
+  position: fixed;
+  max-width: 280px;
+  background: rgba(17, 24, 39, 0.96);
+  color: #ffffff;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  z-index: 999999;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.ggr-tooltip-box.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* =====================================================
+ * 7. Score Breakdown & Helpers
+ * ===================================================== */
+
+.ggr-score-breakdown {
+  margin-top: 12px;
+}
+
+.ggr-error {
+  color: #b32d2e;
+  font-weight: 600;
+}
+
+.ggr-success {
+  color: #1e7e34;
+  font-weight: 600;
+}
+
+/* =====================================================
+ * 8. Loader
+ * ===================================================== */
+
+.ggr-audit-loader {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+/* =====================================================
+ * 9. Responsive Overrides 
+ * ===================================================== */
+
+@media (max-width: 782px) {
+  .ggr-analyzer-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ggr-score-pill {
+    margin-bottom: 12px;
+  }
+
+  .ggr-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
