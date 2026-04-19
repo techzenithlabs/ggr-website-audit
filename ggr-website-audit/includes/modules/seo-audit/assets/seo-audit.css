@@ -1,0 +1,149 @@
+/* =========================================
+   GGR SEO Audit - Base Layout
+========================================= */
+
+.ggr-audit-container {
+  max-width: 900px;
+  margin-top: 20px;
+}
+
+/* Input + Button Row */
+.ggr-audit-header {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#ggr-audit-url {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+/* =========================================
+   Button
+========================================= */
+
+#ggr-run-audit {
+  padding: 8px 16px;
+  font-weight: 600;
+}
+
+/* =========================================
+   Loader
+========================================= */
+
+.ggr-audit-loader {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* =========================================
+   Score Card
+========================================= */
+
+.ggr-score-card {
+  margin-top: 25px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.ggr-score-value {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.ggr-score-status {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* =========================================
+   Status Colors
+========================================= */
+
+.ggr-score-good {
+  color: #16a34a;
+}
+
+.ggr-score-warning {
+  color: #f59e0b;
+}
+
+.ggr-score-bad {
+  color: #dc2626;
+}
+
+/* =========================================
+   Sections (Issues)
+========================================= */
+
+.ggr-section {
+  margin-top: 25px;
+}
+
+.ggr-section h3 {
+  margin-bottom: 10px;
+}
+
+/* Issue Box */
+.ggr-issue {
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Severity styles */
+.ggr-issue-critical {
+  background: #fee2e2;
+  border-left: 4px solid #dc2626;
+}
+
+.ggr-issue-warning {
+  background: #fef3c7;
+  border-left: 4px solid #f59e0b;
+}
+
+.ggr-issue-good {
+  background: #dcfce7;
+  border-left: 4px solid #16a34a;
+}
+
+/* =========================================
+   Insights (Smart Suggestions)
+========================================= */
+
+.ggr-insights {
+  margin-top: 25px;
+  padding: 15px;
+  border-radius: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.ggr-insights h4 {
+  margin-bottom: 10px;
+}
+
+.ggr-insights ul {
+  padding-left: 18px;
+}
+
+.ggr-insights li {
+  margin-bottom: 6px;
+}
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 600px) {
+  .ggr-audit-header {
+    flex-direction: column;
+  }
+}
