@@ -71,8 +71,8 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ( $overall_score >= 60 ? '#1e3
                 </svg>
             </div>
             <div>
-                <div class="sapc-plugin-name">SEO Audit Pro</div>
-                <div class="sapc-plugin-version">v1.0 &mdash; WordPress Plugin</div>
+                <div class="sapc-plugin-name">GGR SEO Intelligence</div>
+                <div class="sapc-plugin-version">Site-Wide Audit Dashboard</div>
             </div>
         </div>
         <div class="sapc-header-actions">
@@ -100,8 +100,8 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ( $overall_score >= 60 ? '#1e3
                     data-score="<?php echo esc_attr( $overall_score ); ?>"
                     data-circ="<?php echo esc_attr( $ring_c ); ?>"
                     data-color="<?php echo esc_attr( $ring_color ); ?>"/>
-                <text x="60" y="54" text-anchor="middle" class="sapc-ring-score-text" id="sapc-ring-val"><?php echo esc_html( $overall_score ); ?></text>
-                <text x="60" y="70" text-anchor="middle" class="sapc-ring-denom-text">/100</text>
+                <text x="60" y="54" text-anchor="middle" class="sapc-ring-score-text" id="sapc-ring-val" fill="#1a2332"><?php echo esc_html( $overall_score ); ?></text>
+                <text x="60" y="70" text-anchor="middle" class="sapc-ring-denom-text" fill="#9ca3af">/100</text>
             </svg>
             <div class="sapc-score-label">Overall SEO Health</div>
             <div class="sapc-score-sublabel sapc-<?php echo $score_class; ?>" id="sapc-score-sublabel"><?php echo $score_label; ?></div>
@@ -141,8 +141,7 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ( $overall_score >= 60 ? '#1e3
         <!-- Issues by Severity -->
         <div class="sapc-card">
             <div class="sapc-card-header">
-                <span class="sapc-card-title">Issues by Severity</span>
-                <span class="sapc-card-badge">Rank Math + Yoast</span>
+                <span class="sapc-card-title">Issues by Severity</span>          
             </div>
             <ul class="sapc-issues-list" id="sapc-issues-list">
                 <?php foreach ( $issues as $issue ) : ?>
@@ -166,8 +165,7 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ( $overall_score >= 60 ? '#1e3
         <!-- Keyword Performance -->
         <div class="sapc-card">
             <div class="sapc-card-header">
-                <span class="sapc-card-title">Keyword Performance</span>
-                <span class="sapc-card-badge">Yoast-style</span>
+                <span class="sapc-card-title">Keyword Performance</span>         
             </div>
             <div class="sapc-tabs">
                 <button class="sapc-tab sapc-tab-active" data-tab="all">All Posts</button>
@@ -212,8 +210,7 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ( $overall_score >= 60 ? '#1e3
         <!-- Readability Breakdown -->
         <div class="sapc-card">
             <div class="sapc-card-header">
-                <span class="sapc-card-title">Readability Breakdown</span>
-                <span class="sapc-card-badge">Yoast-style</span>
+                <span class="sapc-card-title">Readability Breakdown</span>      
             </div>
             <ul class="sapc-readability-list" id="sapc-readability-list">
                 <?php foreach ( $readability as $r ) :
@@ -243,7 +240,6 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ( $overall_score >= 60 ? '#1e3
         <div class="sapc-card">
             <div class="sapc-card-header">
                 <span class="sapc-card-title">Quick Wins</span>
-                <span class="sapc-card-badge">Unique feature</span>
             </div>
             <ul class="sapc-quickwins-list" id="sapc-quickwins-list">
                 <?php foreach ( $quick_wins as $win ) : ?>
@@ -269,8 +265,7 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ( $overall_score >= 60 ? '#1e3
         <!-- Schema Status -->
         <div class="sapc-card">
             <div class="sapc-card-header">
-                <span class="sapc-card-title">Schema Status</span>
-                <span class="sapc-card-badge">Rank Math-style</span>
+                <span class="sapc-card-title">Schema Status</span>          
             </div>
             <div class="sapc-schema-grid" id="sapc-schema-grid">
                 <?php foreach ( $schema_types as $s ) : ?>
@@ -285,8 +280,7 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ( $overall_score >= 60 ? '#1e3
         <!-- 404 Monitor -->
         <div class="sapc-card">
             <div class="sapc-card-header">
-                <span class="sapc-card-title">404 Monitor</span>
-                <span class="sapc-card-badge">Rank Math-style</span>
+                <span class="sapc-card-title">404 Monitor</span>          
             </div>
             <ul class="sapc-monitor-list" id="sapc-monitor-list">
                 <?php if ( ! empty( $broken_links ) ) : ?>
@@ -302,7 +296,7 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ( $overall_score >= 60 ? '#1e3
                 </li>
                 <?php endforeach; ?>
                 <?php else : ?>
-                <li class="sapc-no-data">No deleted/trashed posts found. Install Rank Math for full 404 tracking.</li>
+                <li class="sapc-no-data">No deleted or trashed posts found.</li>
                 <?php endif; ?>
             </ul>
             <div class="sapc-monitor-footer">
@@ -320,8 +314,7 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ( $overall_score >= 60 ? '#1e3
         <!-- Sitemap & Social -->
         <div class="sapc-card">
             <div class="sapc-card-header">
-                <span class="sapc-card-title">Sitemap &amp; Social</span>
-                <span class="sapc-card-badge">Both</span>
+                <span class="sapc-card-title">Sitemap &amp; Social</span>        
             </div>
             <div class="sapc-sitemap-section-label">Sitemap</div>
             <ul class="sapc-sitemap-list">

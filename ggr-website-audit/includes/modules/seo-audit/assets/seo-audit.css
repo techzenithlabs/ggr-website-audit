@@ -1,8 +1,7 @@
 /* ==========================================================================
-   SEO Audit Pro Dashboard — seo-audit.css
-   Matches the SEO Audit Pro v1.0 design spec
+   GGR SEO Intelligence — Dashboard CSS
    @package GGR_Website_Audit
-   @since 2.5.0
+   @since   3.0.0
    ========================================================================== */
 
 /* ── Wrapper ── */
@@ -167,6 +166,7 @@
     font-weight: 800;
     color: #1a2332;
     line-height: 1.1;
+    position: relative;
 }
 .sapc-number-red    { color: #dc2626; }
 .sapc-number-orange { color: #f59e0b; }
@@ -204,7 +204,7 @@
 }
 .sapc-ring-denom-text {
     font-size: 11px;
-    fill: #6b7280;
+    fill: #9ca3af;
     dominant-baseline: middle;
 }
 .sapc-score-label {
@@ -213,17 +213,22 @@
     color: #374151;
     margin-top: 6px;
     text-align: center;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
 }
 .sapc-score-sublabel {
     font-size: 10px;
-    padding: 2px 10px;
+    padding: 3px 10px;
     border-radius: 20px;
     margin-top: 4px;
     font-weight: 600;
+    display: inline-block;
+    text-align: center;
 }
-.sapc-good    { background: #f0fdf4; color: #166534; }
-.sapc-warning { background: #fef3c7; color: #92400e; }
-.sapc-bad     { background: #fee2e2; color: #991b1b; }
+.sapc-good    { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+.sapc-warning { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+.sapc-bad     { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
 
 /* ── Status Dots ── */
 .sapc-dot {
@@ -578,6 +583,59 @@
 @media (max-width: 600px) {
     .sapc-header { flex-direction: column; gap: 12px; align-items: flex-start; }
     .sapc-stats-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── Card entrance animation (driven by JS) ── */
+.sapc-card,
+.sapc-two-col > *,
+.sapc-three-col > * {
+    will-change: opacity, transform;
+}
+
+/* ── Stat number count-up shimmer ── */
+.sapc-stat-number {
+    position: relative;
+}
+.sapc-stat-number::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.55) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: sapc-shimmer 1.4s ease 0s 1;
+    pointer-events: none;
+    border-radius: 4px;
+}
+@keyframes sapc-shimmer {
+    0%   { background-position: -200% 0; opacity: 1; }
+    100% { background-position:  200% 0; opacity: 0; }
+}
+
+/* ── Score ring wrap (glow driven by JS filter) ── */
+.sapc-score-ring-wrap {
+    transition: filter .3s ease;
+}
+
+/* ── Issue row hover lift ── */
+.sapc-issue-clickable:hover {
+    background: #f0f4ff;
+    border-radius: 6px;
+    transform: translateX(3px);
+    transition: transform .15s ease, background .12s;
+}
+
+/* ── Quick win row entrance ── */
+.sapc-win-row {
+    transition: box-shadow .2s ease, transform .2s ease;
+}
+.sapc-win-row:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0,0,0,.08);
+}
+
+/* ── Readability bar animated fill ── */
+.sapc-bar-fill {
+    transition: width .7s cubic-bezier(.4,0,.2,1);
 }
 
 /* ── Loading overlay ── */

@@ -63,7 +63,7 @@ class GGRWA_SEO_Data_Aggregator {
         $total_pages  = (int) $page_counts->publish;
         $total_pub    = $total_posts + $total_pages;
 
-        /* ── Posts with stored SEO score (already audited) ────────────── */
+        /* ── Posts with stored SEO score  ────────────── */
         $audited_ids = $wpdb->get_col(
             "SELECT post_id FROM {$wpdb->postmeta}
              WHERE meta_key = '_ggr_seo_score'
@@ -86,8 +86,7 @@ class GGRWA_SEO_Data_Aggregator {
         $last_time  = (int) get_option( 'ggrwa_last_audit_time', 0 );
         $last_label = $last_time ? human_time_diff( $last_time ) . ' ago' : 'Never';
 
-        /* ── Missing meta descriptions ────────────────────────────────── */
-        // Check Yoast, Rank Math, and All-in-One SEO meta keys.
+        /* ── Missing meta descriptions ────────────────────────────────── */      
         $meta_desc_keys = [ '_yoast_wpseo_metadesc', 'rank_math_description', '_aioseop_description' ];
         $missing_meta   = self::count_posts_missing_any_meta( $meta_desc_keys, $total_pub );
 
@@ -759,7 +758,7 @@ class GGRWA_SEO_Data_Aggregator {
                 'icon'  => '→',
                 'type'  => 'high',
                 'title' => "Set focus keyword on {$no_focus_kw} post" . ( $no_focus_kw > 1 ? 's' : '' ),
-                'desc'  => 'Helps Yoast / Rank Math guide your on-page optimization',
+                'desc'  => 'Helps GGR Page Analyzer guide your on-page optimisation',
             ];
         }
 
@@ -816,12 +815,12 @@ class GGRWA_SEO_Data_Aggregator {
                 $result['severity']  = 'critical';
                 $result['fix_steps'] = [
                     'Open each post below in the editor.',
-                    'Scroll to the Yoast SEO / Rank Math meta box at the bottom.',
-                    'Click the "Edit snippet" button and fill in the Meta Description field (120–158 characters).',
+                    'Scroll to the GGR SEO meta box or any SEO plugin meta box at the bottom.',
+                    'Fill in the Meta Description field (120–158 characters).',
                     'Include your focus keyword naturally in the description.',
                     'Save/update the post.',
                 ];
-                $result['docs_url'] = 'https://yoast.com/meta-descriptions/';
+                $result['docs_url'] = 'https://developers.google.com/search/docs/appearance/snippet';
 
                 $meta_keys   = [ '_yoast_wpseo_metadesc', 'rank_math_description', '_aioseop_description' ];
                 $placeholders = implode( ',', array_fill( 0, count( $meta_keys ), '%s' ) );
@@ -850,13 +849,12 @@ class GGRWA_SEO_Data_Aggregator {
                 $result['severity']  = 'critical';
                 $result['fix_steps'] = [
                     'Open each post below in the editor.',
-                    'In the Yoast SEO panel → "Focus keyphrase" box, type the main keyword this page should rank for.',
-                    'In Rank Math → "Focus Keyword" field, enter your target phrase.',
-                    'Choose a keyword with realistic search volume (use Google Search Console or Ubersuggest).',
+                    'In the GGR Page Analyzer, enter your target keyword in the Focus Keyword field.',
+                    'Choose a keyword with realistic search volume (use Google Search Console).',
                     'Make sure the keyword appears in the title, first paragraph, and meta description.',
                     'Save/update the post.',
                 ];
-                $result['docs_url'] = 'https://yoast.com/focus-keyword/';
+                $result['docs_url'] = 'https://developers.google.com/search/docs/fundamentals/seo-starter-guide';
 
                 $kw_keys      = [ '_yoast_wpseo_focuskw', 'rank_math_focus_keyword', '_aioseop_keywords' ];
                 $placeholders = implode( ',', array_fill( 0, count( $kw_keys ), '%s' ) );
@@ -1039,12 +1037,11 @@ class GGRWA_SEO_Data_Aggregator {
                 $result['fix_title'] = 'Schema Markup — Which Pages Have It';
                 $result['severity']  = 'good';
                 $result['fix_steps'] = [
-                    'Schema markup helps Google show rich results (stars, FAQs, breadcrumbs, etc.).',
-                    'To add schema to more pages: install Rank Math or Yoast SEO Premium.',
-                    'In Rank Math → Schema tab → choose the correct schema type for each post.',
+                    'Add schema to more pages using the GGR Page Analyzer or a schema plugin.',
+                    'Choose the correct schema type for each post (Article, Product, FAQ, etc.).',
                     'Test your schema at: https://search.google.com/test/rich-results',
                 ];
-                $result['docs_url'] = 'https://rankmath.com/kb/rich-snippets/';
+                $result['docs_url'] = 'https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data';
 
                 $posts = $wpdb->get_results( $wpdb->prepare(
                     "SELECT ID, post_title, post_type, post_date

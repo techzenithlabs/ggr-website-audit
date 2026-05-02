@@ -74,6 +74,15 @@ class GGRWA_Plugin {
         if ( class_exists( 'GGRWA_SEO_Audit' ) ) {
             GGRWA_SEO_Audit::register_ajax();
         }
+
+        // PageSpeed API AJAX (needs to fire early, before admin_menu).
+        $psi = GGRWA_PLUGIN_PATH . 'includes/engine/class-ggrwa-pagespeed.php';
+        if ( file_exists( $psi ) ) {
+            require_once $psi;
+        }
+        if ( class_exists( 'GGRWA_PageSpeed' ) ) {
+            GGRWA_PageSpeed::register_ajax();
+        }
     }
 
     private function load_admin() {

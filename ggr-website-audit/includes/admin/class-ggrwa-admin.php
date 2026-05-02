@@ -56,7 +56,8 @@ class GGRWA_Admin
      */      
 
     public function render_dashboard() {
-        require GGRWA_PLUGIN_PATH . 'includes/admin/views/dashboard.php';
+        // SEO Audit Pro dashboard is now the main dashboard.
+        require GGRWA_PLUGIN_PATH . 'includes/modules/seo-audit/view.php';
     }
 
     /**
@@ -213,6 +214,28 @@ class GGRWA_Admin
                 [],
                 GGRWA_VERSION
             );
+        }
+
+        // Enqueue SEO Audit assets on the main dashboard page.
+        if ($hook === 'toplevel_page_ggrwa-audit-dashboard') {
+            wp_enqueue_style(
+                'ggr-seo-audit-css',
+                GGRWA_PLUGIN_URL . 'includes/modules/seo-audit/assets/seo-audit.css',
+                [],
+                GGRWA_VERSION
+            );
+            wp_enqueue_script(
+                'ggr-seo-audit-js',
+                GGRWA_PLUGIN_URL . 'includes/modules/seo-audit/assets/seo-audit.js',
+                ['jquery'],
+                GGRWA_VERSION,
+                true
+            );
+            wp_localize_script('ggr-seo-audit-js', 'ggrwa_seo_dashboard', [
+                'ajax_url'  => admin_url('admin-ajax.php'),
+                'nonce'     => wp_create_nonce('ggrwa_seo_dashboard'),
+                'site_name' => get_bloginfo('name'),
+            ]);
         }
     }
 }

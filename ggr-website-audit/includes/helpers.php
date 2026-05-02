@@ -262,3 +262,20 @@ function ggrwa_is_audit_enabled() {
 }
 
 
+
+/**
+ * Return all public post types available for per-page analysis.
+ * Excludes attachments. Returns array of slug => label.
+ *
+ * @since 3.0.0
+ * @return array
+ */
+function ggrwa_get_analyzable_post_types() {
+    $types  = get_post_types( [ 'public' => true ], 'objects' );
+    $result = [];
+    foreach ( $types as $slug => $obj ) {
+        if ( $slug === 'attachment' ) continue;
+        $result[ $slug ] = $obj->labels->singular_name;
+    }
+    return $result;
+}
