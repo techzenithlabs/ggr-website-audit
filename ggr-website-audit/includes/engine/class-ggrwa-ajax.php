@@ -91,7 +91,18 @@ class GGRWA_Ajax {
             return;
         }
 
-                // Run analyzer.
+        /*
+         * Keep the PHP process alive for the full audit duration.
+         *
+         * On shared hosts the default max_execution_time is 30s which can be
+         * too short when wp_remote_get() has to wait for an external page.
+         * ignore_user_abort() prevents PHP from dying if the browser closes
+         * the connection before the AJAX response arrives.
+         */
+        @set_time_limit( 120 );
+        ignore_user_abort( true );
+
+        // Run analyzer.
         $analyzer = new GGRWA_Analyzer();
         $scan     = $analyzer->run_free_scan( $url );
 
@@ -111,7 +122,7 @@ class GGRWA_Ajax {
 
         $score = $scan['score'];
 
-        $total_score = isset($score['total_score'])   ? (int) $score['total_score'] : (int) $score;
+        $total_score = isset( $score['total_score'] ) ? (int) $score['total_score'] : (int) $score;
 
         $response = array(
             'meta'    => $scan['meta'],
@@ -135,13 +146,51 @@ class GGRWA_Ajax {
             ),
         );
 
+        /*
+         * Reconnect to the database before writing results.
+         *
+         * On live shared hosting, MySQL's wait_timeout can drop an idle
+         * connection while wp_remote_get() is fetching an external URL.
+         * Calling check_connection() here forces a reconnect if needed so
+         * that update_option / update_post_meta never fail silently.
+         */
+        global $wpdb;
+        if ( ! $wpdb->check_connection( false ) ) {
+            // Dead connection — try once more before giving up.
+            $wpdb->db_connect();
+        }
+
         if ( $post_id ) {
             update_post_meta( $post_id, '_ggr_seo_score', $total_score );
-         }
+        }
 
         update_option( 'ggrwa_last_audit_time', time() );
         update_option( 'ggrwa_last_audit_result', $response, false );
 
         wp_send_json_success( $response );
+    }
+
+    /**
+     * Ensure the database connection is alive before running queries.
+     *
+     * Shared hosts often set MySQL's wait_timeout to a low value (60–300 s).
+     * Any long external HTTP request can outlast that window, causing the
+     * "No such file or directory" socket error when WordPress tries to write
+     * back to the database afterwards.
+     *
+     * @since 2.5.0
+     * @return bool True if connected (or reconnected), false otherwise.
+     */
+    private function ensure_db_connection() {
+        global $wpdb;
+
+        if ( $wpdb->check_connection( false ) ) {
+            return true;
+        }
+
+        // Attempt a fresh connect using the same credentials WordPress uses.
+        $wpdb->db_connect();
+
+        return $wpdb->check_connection( false );
     }
 }

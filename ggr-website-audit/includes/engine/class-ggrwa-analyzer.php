@@ -260,13 +260,24 @@ class GGRWA_Analyzer
 
     protected function fetch_html($url)
     {
+        /*
+         * Keep the HTTP timeout short (8 s) so the PHP process finishes well
+         * inside the host's max_execution_time and MySQL never drops the idle
+         * connection while we wait for a slow external page to respond.
+         *
+         * Before making the request we ping the DB so WordPress can reconnect
+         * if the connection was already dropped by the time we get here.
+         */
+        global $wpdb;
+        $wpdb->check_connection( false );
 
         $response = wp_remote_get(
             $url,
             [
-                'timeout' => 15,
-                'headers' => [
-                    'User-Agent' => 'GGR Website Audit',
+                'timeout'    => 8,
+                'user-agent' => 'GGR Website Audit/' . GGRWA_VERSION,
+                'headers'    => [
+                    'User-Agent' => 'GGR Website Audit/' . GGRWA_VERSION,
                 ],
             ]
         );
@@ -543,12 +554,24 @@ class GGRWA_Analyzer
          * 2. Build map of EXISTING internal URLs (published only)
          * ------------------------------------------------------------
          */
-        $published_ids = get_posts([
-            'post_type'      => ['post', 'page'],
-            'post_status'    => 'publish',
-            'posts_per_page' => -1,
-            'fields'         => 'ids',
-        ]);
+        /*
+         * IMPORTANT: posts_per_page was previously -1 (unlimited), which
+         * loads every wp_posts row into memory and can exhaust RAM or stall
+         * the MySQL connection on large sites.  We cap at 500 IDs and cache
+         * the result in a transient so repeated audits skip the DB query.
+         */
+        $published_ids = get_transient( 'ggrwa_published_ids_cache' );
+
+        if ( false === $published_ids ) {
+            $published_ids = get_posts( [
+                'post_type'      => [ 'post', 'page' ],
+                'post_status'    => 'publish',
+                'posts_per_page' => 500,
+                'fields'         => 'ids',
+                'no_found_rows'  => true,
+            ] );
+            set_transient( 'ggrwa_published_ids_cache', $published_ids, 5 * MINUTE_IN_SECONDS );
+        }
 
         $internal_url_map = [];
 
@@ -916,8 +939,8 @@ class GGRWA_Analyzer
 
     protected function page_exists($url)
     {
-
-        $response = wp_remote_head($url, ['timeout' => 10]);
+        // Short timeout — same rationale as fetch_html().
+        $response = wp_remote_head( $url, [ 'timeout' => 5 ] );
 
         if (is_wp_error($response)) {
             return false;

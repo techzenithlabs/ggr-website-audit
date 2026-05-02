@@ -20,6 +20,7 @@ class GGRWA_Plugin {
     public function run() {
 
         $this->load_helpers();
+        $this->load_seo_module();
         $this->load_admin();
         $this->load_engine();
         $this->load_frontend();
@@ -46,6 +47,35 @@ class GGRWA_Plugin {
      *
      * @since 2.3.0
      */
+    private function load_seo_module() {
+
+        $aggregator = GGRWA_PLUGIN_PATH . 'includes/modules/seo-audit/class-seo-data-aggregator.php';
+        $seo_audit  = GGRWA_PLUGIN_PATH . 'includes/modules/seo-audit/class-seo-audit.php';
+
+        if ( file_exists( $aggregator ) ) {
+            require_once $aggregator;
+        }
+
+        if ( file_exists( $seo_audit ) ) {
+            require_once $seo_audit;
+        }
+
+        /*
+         * Register AJAX hooks RIGHT NOW — before admin_menu fires.
+         *
+         * GGRWA_Admin::load_modules() instantiates GGRWA_SEO_Audit for the
+         * admin menu, but admin_menu never fires on AJAX requests. Calling
+         * the static register_ajax() here ensures the handlers are always
+         * registered, whether the request is a normal page or an AJAX call.
+         *
+         * DO NOT call `new GGRWA_SEO_Audit()` here — that would create a
+         * duplicate instance and add two identical menu items.
+         */
+        if ( class_exists( 'GGRWA_SEO_Audit' ) ) {
+            GGRWA_SEO_Audit::register_ajax();
+        }
+    }
+
     private function load_admin() {
 
         if ( ! is_admin() ) {
