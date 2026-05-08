@@ -13,8 +13,8 @@
  * Requires at least: 6.0
  * Tested up to: 6.9
  * Requires PHP: 7.2
- * Author: Yogesh Kumar Raghav
- * Author URI: https://www.getgenuinereview.com/
+ * Author: Tech Zenith Labs
+ * Author URI: https://techzenithlabs.com/
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: ggr-website-audit
