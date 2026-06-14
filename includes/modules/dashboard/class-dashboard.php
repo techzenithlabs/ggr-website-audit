@@ -20,7 +20,7 @@ class GGRWA_Dashboard {
         );
     }
 
-    public function render() {        
-        require GGRWA_PLUGIN_PATH . 'includes/admin/views/dashboard.php';
+    public function render() {      
+            require GGRWA_PLUGIN_PATH . 'includes/admin/views/dashboard.php';
     }
 }

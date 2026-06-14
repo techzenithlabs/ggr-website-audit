@@ -250,7 +250,7 @@ class GGRWA_SEO_Audit {
         wp_send_json_success( self::run_single_analysis( $post ) );
     }
 
-    /** Build status context — unique to GGR, not in Rank Math or Yoast. */
+    /** Build status context — unique to GGR */
     private static function get_status_context( WP_Post $post ): array {
         $status     = $post->post_status;
         $visibility = self::get_visibility( $post );
@@ -370,7 +370,7 @@ class GGRWA_SEO_Audit {
         $word_count = str_word_count( $content );
         $slug       = $post->post_name;
 
-        // Focus keyword — try Rank Math, Yoast, then our own meta.
+        // Focus keyword 
         $focus_kw = get_post_meta( $post->ID, 'rank_math_focus_keyword', true )
                  ?: get_post_meta( $post->ID, '_yoast_wpseo_focuskw', true )
                  ?: get_post_meta( $post->ID, '_ggr_focus_keyword', true )

@@ -417,7 +417,7 @@ class GGRWA_SEO_Data_Aggregator {
                 if ( $score >= $threshold ) { $grade = $g; break; }
             }
 
-            // Focus keyword from Yoast or Rank Math.
+            // Focus keyword 
             $focus_kw = get_post_meta( $row->ID, '_yoast_wpseo_focuskw', true )
                      ?: get_post_meta( $row->ID, 'rank_math_focus_keyword', true )
                      ?: strtolower( wp_trim_words( $row->post_title, 3, '' ) );
@@ -654,7 +654,7 @@ class GGRWA_SEO_Data_Aggregator {
         }
 
         /*
-         * Rank Math 404 monitor — only query if the table actually exists.
+         * 404 monitor — only query if the table actually exists.
          * Querying a non-existent table causes a WordPress DB error notice
          * visible to admins, so we MUST check first.
          */
@@ -884,7 +884,7 @@ class GGRWA_SEO_Data_Aggregator {
                 $result['fix_steps'] = [
                     'Each page on your site should have a unique <title> tag.',
                     'Open each post below — they share identical titles with at least one other page.',
-                    'Rewrite the post title (and the SEO title in Yoast/Rank Math if different) to be unique.',
+                    'Rewrite the post title to be unique.',
                     'Include the primary keyword near the start of the title.',
                     'Keep titles under 60 characters so they display fully in Google results.',
                     'Save/update and re-audit.',
