@@ -100,8 +100,8 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ( $overall_score >= 60 ? '#1e3
                     data-score="<?php echo esc_attr( $overall_score ); ?>"
                     data-circ="<?php echo esc_attr( $ring_c ); ?>"
                     data-color="<?php echo esc_attr( $ring_color ); ?>"/>
-                <text x="60" y="54" text-anchor="middle" class="sapc-ring-score-text" id="sapc-ring-val" fill="#1a2332"><?php echo esc_html( $overall_score ); ?></text>
-                <text x="60" y="70" text-anchor="middle" class="sapc-ring-denom-text" fill="#9ca3af">/100</text>
+                <text x="60" y="52" text-anchor="middle" class="sapc-ring-score-text" id="sapc-ring-val" fill="#1a2332"><?php echo esc_html( $overall_score ); ?></text>
+                <text x="60" y="76" text-anchor="middle" class="sapc-ring-denom-text" fill="#9ca3af">/100</text>
             </svg>
             <div class="sapc-score-label">Overall SEO Health</div>
             <div class="sapc-score-sublabel sapc-<?php echo $score_class; ?>" id="sapc-score-sublabel"><?php echo $score_label; ?></div>
