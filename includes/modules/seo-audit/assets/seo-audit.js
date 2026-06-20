@@ -1,5 +1,5 @@
 /**
- * GGR SEO Intelligence — Dashboard JS
+ * GGR SEO Command Center — Dashboard JS
  *
  * @package GGR_Website_Audit
  * @since   3.0.0
@@ -251,11 +251,11 @@
     });
   }
 
-  /* ── Quick wins ──────────────────────────────────────────────────────── */
+  /* ── SEO Growth Opportunities ──────────────────────────────────────────────────────── */
   function renderQuickWins(wins) {
     const $ul = $("#sapc-quickwins-list").empty();
     if (!wins || !wins.length) {
-      $ul.append('<li class="sapc-no-data">No quick wins yet.</li>');
+      $ul.append('<li class="sapc-no-data">No SEO Growth Opportunities yet.</li>');
       return;
     }
     wins.forEach((w) => {

@@ -72,8 +72,8 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ($overall_score >= 60 ? '#1e3a
                 </svg>
             </div>
             <div>
-                <div class="sapc-plugin-name">GGR SEO Intelligence</div>
-                <div class="sapc-plugin-version">Site-Wide Audit Dashboard</div>
+                <div class="sapc-plugin-name">GGR SEO Command Center</div>
+                <div class="sapc-plugin-version">Your site's SEO health, opportunities, and performance — all in one place.</div>
             </div>
         </div>
         <div class="sapc-header-actions">
@@ -218,7 +218,7 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ($overall_score >= 60 ? '#1e3a
 
     </div>
 
-    <!-- ══ ROW 3: Readability + Quick Wins ═════════════════════════════════ -->
+    <!-- ══ ROW 3: Readability + SEO Growth Opportunities ═════════════════════════════════ -->
     <div class="sapc-two-col">
 
         <!-- Readability Breakdown -->
@@ -250,10 +250,10 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ($overall_score >= 60 ? '#1e3a
             </ul>
         </div>
 
-        <!-- Quick Wins -->
+        <!-- SEO Growth Opportunities -->
         <div class="sapc-card">
             <div class="sapc-card-header">
-                <span class="sapc-card-title">Quick Wins</span>
+                <span class="sapc-card-title">SEO Growth Opportunities</span>
             </div>
             <ul class="sapc-quickwins-list" id="sapc-quickwins-list">
                 <?php foreach ($quick_wins as $win) : ?>
@@ -266,7 +266,7 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ($overall_score >= 60 ? '#1e3a
                     </li>
                 <?php endforeach; ?>
                 <?php if (empty($quick_wins)) : ?>
-                    <li class="sapc-no-data">Run a full audit to see recommended quick wins.</li>
+                    <li class="sapc-no-data">Run a full audit to see recommended SEO Growth Opportunities.</li>
                 <?php endif; ?>
             </ul>
         </div>

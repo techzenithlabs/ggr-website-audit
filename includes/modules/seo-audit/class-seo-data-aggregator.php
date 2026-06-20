@@ -206,7 +206,7 @@ class GGRWA_SEO_Data_Aggregator {
              LIMIT 1"
         );
 
-        /* ── Quick wins ───────────────────────────────────────────────── */
+        /* ── SEO Growth Opportunities ───────────────────────────────────────────────── */
         $quick_wins = self::build_quick_wins(
             $missing_meta, $imgs_no_alt, $thin_content, $has_schema,
             $no_focus_kw, $no_int_links
@@ -256,7 +256,7 @@ class GGRWA_SEO_Data_Aggregator {
             /* readability */
             'readability' => $readability,
 
-            /* quick wins */
+            /* SEO Growth Opportunities */
             'quick_wins' => $quick_wins,
 
             /* schema */
