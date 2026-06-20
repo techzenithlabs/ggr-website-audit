@@ -373,7 +373,7 @@ class GGRWA_SEO_Audit {
         // Focus keyword 
         $focus_kw = get_post_meta( $post->ID, 'ggrwa_focus_keyword', true )
                  ?: get_post_meta( $post->ID, '_ggrwa_wpseo_focuskw', true )
-                 ?: get_post_meta( $post->ID, '_ggr_focus_keyword', true )
+                 ?: get_post_meta( $post->ID, '_ggrwa_focus_keyword', true )
                  ?: '';
         $focus_kw = strtolower( trim( $focus_kw ) );
 

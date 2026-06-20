@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AJAX handler for GGR Website Audit.
  *
@@ -9,7 +10,7 @@
  * @since   2.3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
@@ -21,7 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 2.3.0
  */
-class GGRWA_Ajax {
+class GGRWA_Ajax
+{
 
     /**
      * Constructor.
@@ -30,10 +32,12 @@ class GGRWA_Ajax {
      *
      * @since 2.3.0
      */
-    public function __construct() {
+    public function __construct()
+    {
 
-        add_action( 'wp_ajax_ggrwa_run_audit', array( $this, 'handle_run_audit' ) );
-        add_action( 'wp_ajax_nopriv_ggrwa_run_audit', array( $this, 'handle_run_audit' ) );
+        add_action('wp_ajax_ggrwa_run_audit', array($this, 'handle_run_audit'));
+        add_action('wp_ajax_nopriv_ggrwa_run_audit', array($this, 'handle_run_audit'));
+        add_action('wp_ajax_ggr_save_focus_keyword', array($this, 'save_focus_keyword'));
 
         // PDF download intentionally disabled for WordPress.org release.
     }
@@ -45,47 +49,48 @@ class GGRWA_Ajax {
      *
      * @return void
      */
-    public function handle_run_audit() {
+    public function handle_run_audit()
+    {
 
         // Verify nonce.
-        if ( ! check_ajax_referer( 'ggrwa_run_audit', 'nonce', false ) ) {
+        if (! check_ajax_referer('ggrwa_run_audit', 'nonce', false)) {
             wp_send_json_error(
                 array(
-                    'message' => __( 'Security check failed. Please refresh the page and try again.', 'ggr-website-audit' ),
+                    'message' => __('Security check failed. Please refresh the page and try again.', 'ggr-website-audit'),
                 )
             );
             return;
         }
 
         // Capability check.
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if (! current_user_can('manage_options')) {
             wp_send_json_error(
                 array(
-                    'message' => __( 'You are not allowed to perform this action.', 'ggr-website-audit' ),
+                    'message' => __('You are not allowed to perform this action.', 'ggr-website-audit'),
                 )
             );
             return;
         }
 
         // Check if audit is enabled.
-        if ( ! ggrwa_is_audit_enabled() ) {
+        if (! ggrwa_is_audit_enabled()) {
             wp_send_json_error(
                 array(
-                    'message' => __( 'Website Audit is disabled. Please enable it from settings.', 'ggr-website-audit' ),
+                    'message' => __('Website Audit is disabled. Please enable it from settings.', 'ggr-website-audit'),
                 )
             );
             return;
         }
 
         // Determine audit URL.
-        $url = isset( $_POST['url'] )
-            ? esc_url_raw( wp_unslash( $_POST['url'] ) )
+        $url = isset($_POST['url'])
+            ? esc_url_raw(wp_unslash($_POST['url']))
             : '';
 
-        if ( empty( $url ) ) {
+        if (empty($url)) {
             wp_send_json_error(
                 array(
-                    'message' => __( 'Invalid URL provided.', 'ggr-website-audit' ),
+                    'message' => __('Invalid URL provided.', 'ggr-website-audit'),
                 )
             );
             return;
@@ -99,14 +104,14 @@ class GGRWA_Ajax {
          * ignore_user_abort() prevents PHP from dying if the browser closes
          * the connection before the AJAX response arrives.
          */
-        @set_time_limit( 120 );
-        ignore_user_abort( true );
+        @set_time_limit(120);
+        ignore_user_abort(true);
 
         // Run analyzer.
         $analyzer = new GGRWA_Analyzer();
-        $scan     = $analyzer->run_free_scan( $url );
+        $scan     = $analyzer->run_free_scan($url);
 
-        if ( is_wp_error( $scan ) ) {
+        if (is_wp_error($scan)) {
             wp_send_json_error(
                 array(
                     'message' => $scan->get_error_message(),
@@ -116,29 +121,29 @@ class GGRWA_Ajax {
         }
 
         $post_id = 0;
-        if ( ! empty( $scan['meta']['url'] ) ) {
-            $post_id = url_to_postid( $scan['meta']['url'] );
+        if (! empty($scan['meta']['url'])) {
+            $post_id = url_to_postid($scan['meta']['url']);
         }
 
         $score = $scan['score'];
 
-        $total_score = isset( $score['total_score'] ) ? (int) $score['total_score'] : (int) $score;
+        $total_score = isset($score['total_score']) ? (int) $score['total_score'] : (int) $score;
 
         $response = array(
             'meta'    => $scan['meta'],
-            'summary' => __( 'Audit completed using real on-page signals.', 'ggr-website-audit' ),
+            'summary' => __('Audit completed using real on-page signals.', 'ggr-website-audit'),
             'audit'   => $scan['audit'],
             'page_actions' => array(
                 'post_id'        => $post_id,
-                'view_url'       => $post_id ? get_permalink( $post_id ) : '',
-                'edit_url'       => ( $post_id && current_user_can( 'edit_post', $post_id ) )
-                    ? get_edit_post_link( $post_id, '' )
+                'view_url'       => $post_id ? get_permalink($post_id) : '',
+                'edit_url'       => ($post_id && current_user_can('edit_post', $post_id))
+                    ? get_edit_post_link($post_id, '')
                     : '',
-                'is_home'        => $post_id === (int) get_option( 'page_on_front' ),
-                'is_static_home' => (int) get_option( 'page_on_front' ) > 0,
+                'is_home'        => $post_id === (int) get_option('page_on_front'),
+                'is_static_home' => (int) get_option('page_on_front') > 0,
             ),
             'score' => array(
-                'total'      => isset( $score['total_score'] ) ? (int) $score['total_score'] : (int) $score,
+                'total'      => isset($score['total_score']) ? (int) $score['total_score'] : (int) $score,
                 'confidence' => $score['confidence'] ?? null,
                 'priority'   => $score['priority'] ?? null,
                 'trend'      => $score['trend'] ?? null,
@@ -155,19 +160,19 @@ class GGRWA_Ajax {
          * that update_option / update_post_meta never fail silently.
          */
         global $wpdb;
-        if ( ! $wpdb->check_connection( false ) ) {
+        if (! $wpdb->check_connection(false)) {
             // Dead connection — try once more before giving up.
             $wpdb->db_connect();
         }
 
-        if ( $post_id ) {
-            update_post_meta( $post_id, '_ggr_seo_score', $total_score );
+        if ($post_id) {
+            update_post_meta($post_id, '_ggr_seo_score', $total_score);
         }
 
-        update_option( 'ggrwa_last_audit_time', time() );
-        update_option( 'ggrwa_last_audit_result', $response, false );
+        update_option('ggrwa_last_audit_time', time());
+        update_option('ggrwa_last_audit_result', $response, false);
 
-        wp_send_json_success( $response );
+        wp_send_json_success($response);
     }
 
     /**
@@ -181,16 +186,62 @@ class GGRWA_Ajax {
      * @since 2.5.0
      * @return bool True if connected (or reconnected), false otherwise.
      */
-    private function ensure_db_connection() {
+    private function ensure_db_connection()
+    {
         global $wpdb;
 
-        if ( $wpdb->check_connection( false ) ) {
+        if ($wpdb->check_connection(false)) {
             return true;
         }
 
         // Attempt a fresh connect using the same credentials WordPress uses.
         $wpdb->db_connect();
 
-        return $wpdb->check_connection( false );
+        return $wpdb->check_connection(false);
+    }
+
+    /**
+     * Save the Focus Keyword via AJAX.
+     *
+     * Handles asynchronous keyword updates from the SEO Intelligence
+     * panel without requiring the user to manually save the post.
+     *
+     * The keyword is sanitized before being stored and is used by
+     * the SEO analyzer to calculate optimization scores, keyword
+     * placement, readability checks, and future AI recommendations.
+     *
+     * @since 2.5.0
+     *
+     * @return void Sends a JSON success/error response and exits.
+     */
+
+    public function save_focus_keyword()
+    {
+
+        if (! current_user_can('edit_posts')) {
+            wp_send_json_error();
+        }
+
+        $post_id = isset($_POST['post_id'])
+            ? absint($_POST['post_id'])
+            : 0;
+
+        $keyword = isset($_POST['keyword'])
+            ? sanitize_text_field(
+                wp_unslash($_POST['keyword'])
+            )
+            : '';
+
+        update_post_meta(
+            $post_id,
+            '_ggrwa_focus_keyword',
+            $keyword
+        );
+
+        wp_send_json_success(
+            array(
+                'message' => 'Focus keyword saved',
+            )
+        );
     }
 }

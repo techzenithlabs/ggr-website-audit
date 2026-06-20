@@ -91,7 +91,12 @@ class GGRWA_SEO_Data_Aggregator {
         $missing_meta   = self::count_posts_missing_any_meta( $meta_desc_keys, $total_pub );
 
         /* ── No focus keyword set ─────────────────────────────────────── */
-        $kw_keys        = [ '_ggrwa_wpseo_focuskw', 'ggrwa_focus_keyword', '_aioseop_keywords' ];
+        $kw_keys = [
+             '_ggrwa_focus_keyword',
+            '_ggrwa_wpseo_focuskw',
+            'ggrwa_focus_keyword',
+            '_aioseop_keywords'
+];
         $no_focus_kw    = self::count_posts_missing_any_meta( $kw_keys, $total_pub );
 
         /* ── Duplicate post titles ────────────────────────────────────── */
@@ -418,14 +423,18 @@ class GGRWA_SEO_Data_Aggregator {
             }
 
             // Focus keyword 
-            $focus_kw = get_post_meta($row->ID, '_ggrwa_wpseo_focuskw', true)
+            $focus_kw =
+                get_post_meta($row->ID, '_ggrwa_focus_keyword', true)
+                ?: get_post_meta($row->ID, '__ggrwa_focus_keyword', true)
+                ?: get_post_meta($row->ID, '_ggr_focus_keyword', true)
                 ?: get_post_meta($row->ID, 'ggrwa_focus_keyword', true);
 
             $has_focus_keyword = ! empty($focus_kw);
+            
 
             if (empty($focus_kw)) {
                 $focus_kw = 'No focus keyword set';
-}
+            }
 
             // Map post_type to tab key.
             $tab = 'all';
@@ -862,7 +871,12 @@ class GGRWA_SEO_Data_Aggregator {
                 ];
                 $result['docs_url'] = 'https://developers.google.com/search/docs/fundamentals/seo-starter-guide';
 
-                $kw_keys      = [ '_ggrwa_wpseo_focuskw', 'ggrwa_focus_keyword', '_aioseop_keywords' ];
+                $kw_keys = [
+                    '_ggrwa_focus_keyword',
+                    '_ggrwa_wpseo_focuskw',
+                    'ggrwa_focus_keyword',
+                    '_aioseop_keywords'
+];
                 $placeholders = implode( ',', array_fill( 0, count( $kw_keys ), '%s' ) );
 
                 $posts = $wpdb->get_results( $wpdb->prepare(

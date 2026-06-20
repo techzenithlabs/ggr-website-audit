@@ -223,7 +223,7 @@
                             ${badge}
                         </span>
                     </span>
-                    <span class="sapc-kscore ${sc}">${score}</span>
+                    <span class="sapc-kscore ${sc}">${score} % </span>
                 </li>`);
     });
   }
@@ -541,7 +541,7 @@
           .trim(),
         has_focus_keyword: $row.find(".sapc-focus-ok").length > 0,
         post_type_label: $row.find(".sapc-kw-type-badge").text().trim(),
-        score: parseInt($row.find(".sapc-kscore").text(), 10) || 0,
+        score: parseInt($row.find(".sapc-kscore").text(), 10) || 0 + '%',
         tab: $row.data("tab") || "all",
         post_type: $row.data("posttype") || "post",
         edit_url: $row.find(".sapc-kw-title").attr("href") || "",

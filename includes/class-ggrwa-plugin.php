@@ -94,12 +94,19 @@ class GGRWA_Plugin {
         $admin   = GGRWA_PLUGIN_PATH . 'includes/admin/class-ggrwa-admin.php';
         $setting = GGRWA_PLUGIN_PATH . 'includes/admin/class-ggrwa-settings.php';
 
+        $seo_intelligence = GGRWA_PLUGIN_PATH .
+            'includes/modules/seo-intelligence/class-seo-intelligence.php';
+
         if ( file_exists( $admin ) ) {
             require_once $admin;
         }
 
         if ( file_exists( $setting ) ) {
             require_once $setting;
+        }
+
+        if (file_exists($seo_intelligence)) {
+            require_once $seo_intelligence;
         }
 
         if ( class_exists( 'GGRWA_Admin' ) ) {
@@ -150,4 +157,6 @@ class GGRWA_Plugin {
             require_once $enqueue;
         }
     }
+
+    
 }

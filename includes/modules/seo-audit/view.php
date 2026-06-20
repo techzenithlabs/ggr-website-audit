@@ -13,7 +13,9 @@
 if (! defined('ABSPATH')) exit;
 
 // Pull live data (from transient cache or freshly computed).
-$d = GGRWA_SEO_Data_Aggregator::get();
+
+
+$d = GGRWA_SEO_Data_Aggregator::get(true);
 
 /* ── Convenience variables ─────────────────────────────────────────────── */
 $overall_score   = (int) ($d['overall_score']   ?? 0);
