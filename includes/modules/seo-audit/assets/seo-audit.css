@@ -1,5 +1,5 @@
 /* ==========================================================================
-   GGR SEO Intelligence — Dashboard CSS
+   GGR SEO Command Center — Dashboard CSS
    @package GGR_Website_Audit
    @since   3.0.0
    ========================================================================== */
@@ -342,17 +342,17 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    font-size: 13px;
-    font-weight: 800;
-    flex-shrink: 0;
+    min-width: 80px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
 }
-.sapc-grade-a { background: #1e3a5f; color: #fff; }
-.sapc-grade-b { background: #3b82f6; color: #fff; }
-.sapc-grade-c { background: #f59e0b; color: #fff; }
-.sapc-grade-d { background: #dc2626; color: #fff; }
+.sapc-grade-excellent { background: #1e3a5f; color: #fff; }
+.sapc-grade-good { background: #3b82f6; color: #fff; }
+.sapc-grade-average  { background: #f59e0b; color: #fff; }
+.sapc-grade-poor{ background: #dc2626; color: #fff; }
 .sapc-kw-info {
     flex: 1;
     display: flex;
@@ -365,8 +365,10 @@
     color: #1a2332;
 }
 .sapc-kw-meta {
-    font-size: 11px;
-    color: #9ca3af;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:wrap;
 }
 .sapc-kscore {
     font-size: 14px;
@@ -409,6 +411,31 @@
     border-radius: 4px;
     transition: width .4s ease;
 }
+
+/* Focus Keyword Status */
+
+.sapc-focus-keyword-badge{
+    display:inline-flex;
+    align-items:center;
+    margin-right:6px;
+    padding:3px 8px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:600;
+    line-height:1.2;
+}
+
+.sapc-focus-ok{
+    background:#ecfdf5;
+    color:#15803d;
+    border:1px solid #bbf7d0;
+}
+
+.sapc-focus-missing{
+    background:#fef2f2;
+    color:#dc2626;
+    border:1px solid #fecaca;
+}
 .sapc-bar-good    { background: #16a34a; }
 .sapc-bar-warning { background: #f59e0b; }
 .sapc-bar-bad     { background: #dc2626; }
@@ -433,7 +460,7 @@
     font-weight: 600;
 }
 
-/* ── Quick Wins ── */
+/* ── SEO Growth Opportunities ── */
 .sapc-quickwins-list {
     margin: 0;
     padding: 0;

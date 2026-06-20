@@ -206,12 +206,22 @@
         ? `<a href="${esc(kw.edit_url)}" class="sapc-kw-title" target="_blank">${esc(kw.title)}</a>`
         : `<span class="sapc-kw-title">${esc(kw.title)}</span>`;
       const badge = `<span class="sapc-kw-type-badge sapc-type-${esc(kw.post_type || "post")}">${esc(kw.post_type || "post")}</span>`;
+      const keywordBadge = kw.has_focus_keyword
+        ? `<span class="sapc-focus-keyword-badge sapc-focus-ok">
+            Focus: ${esc(kw.keyword)}
+       </span>`
+        : `<span class="sapc-focus-keyword-badge sapc-focus-missing">
+            No Focus Keyword
+       </span>`;
 
       $ul.append(`
                 <li class="sapc-keyword-row">
                     <span class="sapc-grade sapc-grade-${g}">${esc(kw.grade)}</span>
                     <span class="sapc-kw-info">${title}
-                        <span class="sapc-kw-meta">${esc(kw.keyword)}${badge}</span>
+                        <span class="sapc-kw-meta">
+                            ${keywordBadge}
+                            ${badge}
+                        </span>
                     </span>
                     <span class="sapc-kscore ${sc}">${score}</span>
                 </li>`);
@@ -517,10 +527,24 @@
 
     // Cache keyword rows for tab filtering.
     $("#sapc-keyword-list .sapc-keyword-row").each(function () {
+      const $row = $(this);
       _allKeywordRows.push({
-        _el: this,
-        tab: $(this).data("tab") || "all",
-        post_type: $(this).data("posttype") || "post",
+        grade: $row.find(".sapc-grade").text().trim(),
+        title: $row.find(".sapc-kw-title").text().trim(),
+        keyword: $row
+          .find(".sapc-kw-meta")
+          .clone()
+          .find(".sapc-kw-type-badge")
+          .remove()
+          .end()
+          .text()
+          .trim(),
+        has_focus_keyword: $row.find(".sapc-focus-ok").length > 0,
+        post_type_label: $row.find(".sapc-kw-type-badge").text().trim(),
+        score: parseInt($row.find(".sapc-kscore").text(), 10) || 0,
+        tab: $row.data("tab") || "all",
+        post_type: $row.data("posttype") || "post",
+        edit_url: $row.find(".sapc-kw-title").attr("href") || "",
       });
     });
   });

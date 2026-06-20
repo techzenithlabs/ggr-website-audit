@@ -371,26 +371,26 @@ class GGRWA_SEO_Audit {
         $slug       = $post->post_name;
 
         // Focus keyword 
-        $focus_kw = get_post_meta( $post->ID, 'rank_math_focus_keyword', true )
-                 ?: get_post_meta( $post->ID, '_yoast_wpseo_focuskw', true )
+        $focus_kw = get_post_meta( $post->ID, 'ggrwa_focus_keyword', true )
+                 ?: get_post_meta( $post->ID, '_ggrwa_wpseo_focuskw', true )
                  ?: get_post_meta( $post->ID, '_ggr_focus_keyword', true )
                  ?: '';
         $focus_kw = strtolower( trim( $focus_kw ) );
 
         // Meta description.
-        $meta_desc = get_post_meta( $post->ID, 'rank_math_description', true )
-                  ?: get_post_meta( $post->ID, '_yoast_wpseo_metadesc', true )
+        $meta_desc = get_post_meta( $post->ID, 'ggrwa_description', true )
+                  ?: get_post_meta( $post->ID, '_ggrwa_wpseo_metadesc', true )
                   ?: get_post_meta( $post->ID, '_ggr_meta_description', true )
                   ?: '';
 
         // OG image.
-        $og_img = get_post_meta( $post->ID, 'rank_math_og_image', true )
-               ?: get_post_meta( $post->ID, '_yoast_wpseo_opengraph-image', true )
+        $og_img = get_post_meta( $post->ID, 'ggrwa_og_image', true )
+               ?: get_post_meta( $post->ID, '_ggrwa_wpseo_opengraph-image', true )
                ?: ( has_post_thumbnail( $post->ID ) ? get_the_post_thumbnail_url( $post->ID, 'full' ) : '' );
 
         // Schema.
-        $schema_raw = get_post_meta( $post->ID, 'rank_math_schema_Article', true )
-                   ?: get_post_meta( $post->ID, '_yoast_wpseo_schema_article_type', true )
+        $schema_raw = get_post_meta( $post->ID, 'ggrwa_schema_Article', true )
+                   ?: get_post_meta( $post->ID, '_ggrwa_wpseo_schema_article_type', true )
                    ?: '';
 
         // Parse headings from raw content.

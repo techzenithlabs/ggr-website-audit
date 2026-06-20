@@ -87,11 +87,11 @@ class GGRWA_SEO_Data_Aggregator {
         $last_label = $last_time ? human_time_diff( $last_time ) . ' ago' : 'Never';
 
         /* ── Missing meta descriptions ────────────────────────────────── */      
-        $meta_desc_keys = [ '_yoast_wpseo_metadesc', 'rank_math_description', '_aioseop_description' ];
+        $meta_desc_keys = [ '_ggrwa_wpseo_metadesc', 'ggrwa_description', '_aioseop_description' ];
         $missing_meta   = self::count_posts_missing_any_meta( $meta_desc_keys, $total_pub );
 
         /* ── No focus keyword set ─────────────────────────────────────── */
-        $kw_keys        = [ '_yoast_wpseo_focuskw', 'rank_math_focus_keyword', '_aioseop_keywords' ];
+        $kw_keys        = [ '_ggrwa_wpseo_focuskw', 'ggrwa_focus_keyword', '_aioseop_keywords' ];
         $no_focus_kw    = self::count_posts_missing_any_meta( $kw_keys, $total_pub );
 
         /* ── Duplicate post titles ────────────────────────────────────── */
@@ -190,18 +190,18 @@ class GGRWA_SEO_Data_Aggregator {
         /* ── OG / Social ──────────────────────────────────────────────── */
         $og_title_set = (int) $wpdb->get_var(
             "SELECT COUNT(*) FROM {$wpdb->postmeta}
-             WHERE meta_key IN ('_yoast_wpseo_opengraph-title','rank_math_facebook_title')
+             WHERE meta_key IN ('_ggrwa_wpseo_opengraph-title','ggrwa_facebook_title')
                AND meta_value != ''"
         );
         $og_img_set = (int) $wpdb->get_var(
             "SELECT COUNT(*) FROM {$wpdb->postmeta}
-             WHERE meta_key IN ('_yoast_wpseo_opengraph-image','rank_math_facebook_image')
+             WHERE meta_key IN ('_ggrwa_wpseo_opengraph-image','ggrwa_facebook_image')
                AND meta_value != ''"
         );
         $og_img_missing = max( 0, $total_posts - $og_img_set );
         $twitter_enabled = (bool) $wpdb->get_var(
             "SELECT COUNT(*) FROM {$wpdb->postmeta}
-             WHERE meta_key IN ('_yoast_wpseo_twitter-title','rank_math_twitter_title')
+             WHERE meta_key IN ('_ggrwa_wpseo_twitter-title','ggrwa_twitter_title')
                AND meta_value != ''
              LIMIT 1"
         );
@@ -407,20 +407,25 @@ class GGRWA_SEO_Data_Aggregator {
             ) );
         }
 
-        $grade_map = [ 90 => 'A', 70 => 'B', 50 => 'C', 30 => 'D' ];
+        $grade_map = [ 90 => 'Excellent', 70 => 'Good', 50 => 'Average', 30 => 'Poor' ];
 
         $result = [];
         foreach ( $rows as $row ) {
             $score = (int) $row->seo_score;
-            $grade = 'D';
+            $grade = 'Poor';
             foreach ( $grade_map as $threshold => $g ) {
                 if ( $score >= $threshold ) { $grade = $g; break; }
             }
 
             // Focus keyword 
-            $focus_kw = get_post_meta( $row->ID, '_yoast_wpseo_focuskw', true )
-                     ?: get_post_meta( $row->ID, 'rank_math_focus_keyword', true )
-                     ?: strtolower( wp_trim_words( $row->post_title, 3, '' ) );
+            $focus_kw = get_post_meta($row->ID, '_ggrwa_wpseo_focuskw', true)
+                ?: get_post_meta($row->ID, 'ggrwa_focus_keyword', true);
+
+            $has_focus_keyword = ! empty($focus_kw);
+
+            if (empty($focus_kw)) {
+                $focus_kw = 'No focus keyword set';
+}
 
             // Map post_type to tab key.
             $tab = 'all';
@@ -428,14 +433,15 @@ class GGRWA_SEO_Data_Aggregator {
             if ( $row->post_type === 'product' ) $tab = 'products';
 
             $result[] = [
-                'grade'     => $grade,
-                'title'     => $row->post_title,
-                'keyword'   => $focus_kw,
-                'score'     => $score,
-                'post_type' => $row->post_type,
-                'tab'       => $tab,
-                'edit_url'  => current_user_can( 'edit_post', $row->ID )
-                               ? get_edit_post_link( $row->ID, '' ) : '',
+                'grade'             => $grade,
+                'title'             => $row->post_title,
+                'keyword'           => $focus_kw,
+                'has_focus_keyword' => $has_focus_keyword,
+                'score'             => $score,
+                'post_type'         => $row->post_type,
+                'tab'               => $tab,
+                'edit_url'          => current_user_can('edit_post', $row->ID)
+                    ? get_edit_post_link($row->ID, '') : '',
             ];
         }
 
@@ -658,8 +664,8 @@ class GGRWA_SEO_Data_Aggregator {
          * Querying a non-existent table causes a WordPress DB error notice
          * visible to admins, so we MUST check first.
          */
-        $rm404_table   = $wpdb->prefix . 'rank_math_404_logs';
-        $redir_table   = $wpdb->prefix . 'rank_math_redirections';
+        $rm404_table   = $wpdb->prefix . 'ggrwa_404_logs';
+        $redir_table   = $wpdb->prefix . 'ggrwa_redirections';
 
         $rm404_exists  = $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $rm404_table ) ) === $rm404_table;
         $redir_exists  = $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $redir_table ) ) === $redir_table;
@@ -822,7 +828,7 @@ class GGRWA_SEO_Data_Aggregator {
                 ];
                 $result['docs_url'] = 'https://developers.google.com/search/docs/appearance/snippet';
 
-                $meta_keys   = [ '_yoast_wpseo_metadesc', 'rank_math_description', '_aioseop_description' ];
+                $meta_keys   = [ '_ggrwa_wpseo_metadesc', 'ggrwa_description', '_aioseop_description' ];
                 $placeholders = implode( ',', array_fill( 0, count( $meta_keys ), '%s' ) );
 
                 $posts = $wpdb->get_results( $wpdb->prepare(
@@ -856,7 +862,7 @@ class GGRWA_SEO_Data_Aggregator {
                 ];
                 $result['docs_url'] = 'https://developers.google.com/search/docs/fundamentals/seo-starter-guide';
 
-                $kw_keys      = [ '_yoast_wpseo_focuskw', 'rank_math_focus_keyword', '_aioseop_keywords' ];
+                $kw_keys      = [ '_ggrwa_wpseo_focuskw', 'ggrwa_focus_keyword', '_aioseop_keywords' ];
                 $placeholders = implode( ',', array_fill( 0, count( $kw_keys ), '%s' ) );
 
                 $posts = $wpdb->get_results( $wpdb->prepare(

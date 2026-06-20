@@ -125,6 +125,24 @@ class GGRWA_Admin
      */
     public function enqueue_admin_assets($hook)
     {
+        //global
+
+        if (strpos($hook, 'ggrwa') !== false) {
+
+                wp_enqueue_style(
+                    'ggr-google-fonts',
+                    'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
+                    [],
+                    null
+                );
+
+                wp_enqueue_style(
+                    'ggr-admin-css',
+                    GGRWA_PLUGIN_URL . 'assets/css/admin.css',
+                    ['ggr-google-fonts'],
+                    GGRWA_VERSION
+                );
+        }
         // Utils
         wp_enqueue_script(
             'ggr-utils',

@@ -20,6 +20,11 @@
  * 1. Base Admin Layout
  * ===================================================== */
 
+
+.wrap.sapc-wrap {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
 .ggr-admin .ggr-card {
   background: #ffffff;
   padding: 20px;
