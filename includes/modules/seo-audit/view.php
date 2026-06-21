@@ -196,7 +196,7 @@ $ring_color  = $overall_score >= 80 ? '#16a34a' : ($overall_score >= 60 ? '#1e3a
                                     <span class="sapc-focus-keyword-badge <?php echo ! empty($kw['has_focus_keyword']) ? 'sapc-focus-ok' : 'sapc-focus-missing'; ?>">
 
                                         <?php if (! empty($kw['has_focus_keyword'])) : ?>
-                                            <?php echo esc_html('Focus: ' . $kw['keyword']); ?>
+                                            <?php echo esc_html('Focus Keyword : ' . $kw['keyword']); ?>
                                         <?php else : ?>
                                             No Focus Keyword
                                         <?php endif; ?>

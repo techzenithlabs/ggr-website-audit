@@ -1,205 +1,611 @@
+css
 /**
+ * ============================================
  * GGR SEO Intelligence
- * 
+ * Premium UI v2
+ * ============================================
  */
 
-/* Main Container */
-.ggr-seo-intelligence{
-	background:#fff;
-	border:1px solid #dcdcde;
-	border-radius:8px;
-	margin:15px 0;
-	overflow:hidden;
+/* ============================================
+   Main Container
+============================================ */
+
+.ggr-seo-intelligence {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 16px;
+	overflow: hidden;
+	margin: 15px 0;
+
+	box-shadow:
+		0 4px 12px rgba(15, 23, 42, 0.04),
+		0 12px 30px rgba(15, 23, 42, 0.05);
+}
+
+/* ============================================
+   Header
+============================================ */
+
+.ggr-seo-toggle {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 18px 24px;
+	cursor: pointer;
+	background: #ffffff;
+}
+
+.ggr-seo-toggle:hover {
+	background: #fafafa;
+}
+
+.ggr-seo-toggle-left {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.ggr-icon {
+	font-size: 20px;
+}
+
+.ggr-subtitle {
+	font-size: 12px;
+	color: #6b7280;
+	margin-top: 2px;
+}
+
+.ggr-seo-toggle-right {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.ggr-score {
+	background: linear-gradient(135deg, #eff6ff, #dbeafe);
+
+	color: #1d4ed8;
+
+	border: 1px solid #bfdbfe;
+
+	font-weight: 700;
+
+	padding: 8px 16px;
+
+	border-radius: 999px;
+
+	box-shadow: 0 4px 10px rgba(59, 130, 246, 0.15);
+}
+
+.ggr-arrow {
+	font-size: 14px;
+	color: #6b7280;
+}
+
+/* ============================================
+   Body
+============================================ */
+
+.ggr-seo-content {
+	padding: 24px;
+	border-top: 1px solid #eef2f7;
+	background: #f5f7fb;
+}
+
+/* ============================================
+   Generic Cards
+============================================ */
+
+.ggr-card {
+	background: #ffffff;
+
+	border: 1px solid #e5e7eb;
+
+	border-radius: 16px;
+
+	margin-bottom: 22px;
+
+	overflow: hidden;
+
+	box-shadow:
+		0 2px 6px rgba(15, 23, 42, 0.03),
+		0 8px 20px rgba(15, 23, 42, 0.04);
+
+	transition: all 0.25s ease;
+}
+
+.ggr-card:hover {
+	box-shadow:
+		0 6px 14px rgba(15, 23, 42, 0.05),
+		0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+.ggr-card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	padding: 16px 20px;
+
+	font-size: 15px;
+	font-weight: 700;
+
+	color: #0f172a;
+
+	background: #fafcff;
+
+	border-bottom: 1px solid #eef2f7;
+}
+
+.ggr-card-body {
+	padding: 20px;
+}
+
+/* ============================================
+   Focus Keyword
+============================================ */
+
+.ggr-focus-input {
+	width: 100%;
+	max-width: 700px;
+
+	height: 48px;
+
+	padding: 0 16px;
+
+	border: 1px solid #d1d5db;
+
+	border-radius: 10px;
+
+	font-size: 14px;
+
+	transition: all 0.2s ease;
+}
+
+.ggr-focus-input:focus {
+	outline: none;
+
+	border-color: #3b82f6;
+
+	box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+.ggr-save-status {
+	margin-top: 12px;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.ggr-save-status.success {
+	color: #16a34a;
+}
+
+.ggr-save-status.error {
+	color: #dc2626;
+}
+
+.ggr-keyword-status {
+	margin-top: 12px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.ggr-status-success {
+	color: #15803d;
+}
+
+.ggr-status-warning {
+	color: #b45309;
+}
+
+.ggr-status-error {
+	color: #dc2626;
+}
+
+/* ============================================
+   Quick Fixes
+============================================ */
+
+.ggr-fix-list {
+	margin: 0;
+	padding-left: 20px;
+}
+
+.ggr-fix-list li {
+	margin: 8px 0;
+	color: #92400e;
+	font-size: 13px;
+}
+
+/* ============================================
+   Foundation Score Badge
+============================================ */
+
+.ggr-section-badge {
+	background: #eef4ff;
+
+	color: #2563eb;
+
+	font-size: 12px;
+
+	font-weight: 700;
+
+	padding: 6px 12px;
+
+	border-radius: 999px;
+}
+
+/* ============================================
+   Check Grid
+============================================ */
+
+.ggr-check-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.ggr-check-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	padding: 12px 16px;
+
+	border-radius: 12px;
+
+	font-size: 13px;
+	font-weight: 600;
+
+	transition: all 0.2s ease;
+}
+
+/* Success */
+
+.ggr-check-item.success {
+	background: #ecfdf3;
+	border-left: 4px solid #16a34a;
+	color: #166534;
+}
+
+/* Warning */
+
+.ggr-check-item.warning {
+	background: #fff7ed;
+	border-left: 4px solid #f59e0b;
+	color: #9a3412;
+}
+
+/* Error */
+
+.ggr-check-item.error {
+	background: #fef2f2;
+	border-left: 4px solid #dc2626;
+	color: #991b1b;
+}
+
+/* Neutral */
+
+.ggr-check-item.neutral {
+	background: #f8fafc;
+	border-left: 4px solid #cbd5e1;
+	color: #64748b;
+}
+
+/* ============================================
+   Metrics Grid
+============================================ */
+
+.ggr-metric-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 16px;
+}
+
+.ggr-metric-card {
+	background: #ffffff;
+
+	border: 1px solid #e5e7eb;
+
+	border-radius: 14px;
+
+	padding: 20px;
+
+	min-height: 100px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	transition: all 0.25s ease;
+}
+
+.ggr-metric-card:hover {
+	transform: translateY(-3px);
+
+	border-color: #dbeafe;
+
+	box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.ggr-metric-value {
+	font-size: 32px;
+	font-weight: 700;
+
+	color: #0f172a;
+
+	line-height: 1;
+}
+
+.ggr-metric-label {
+	margin-top: 8px;
+
+	font-size: 13px;
+
+	color: #64748b;
+}
+
+/* ============================================
+   Future States
+============================================ */
+
+.ggr-metric-good {
+	color: #16a34a;
+}
+
+.ggr-metric-warning {
+	color: #d97706;
+}
+
+.ggr-metric-error {
+	color: #dc2626;
+}
+
+/* ==========================================
+   SEO Opportunity Card
+========================================== */
+
+.ggr-opportunity-card {
+
+	background: #ffffff;
+
+	border: 1px solid #dbeafe;
+
+	border-radius: 16px;
+
+	padding: 20px;
+
+	box-shadow:
+		0 4px 12px rgba(59, 130, 246, .05),
+		0 12px 24px rgba(59, 130, 246, .08);
+
+	transition: all .25s ease;
+}
+
+.ggr-opportunity-card:hover {
+
+	box-shadow:
+		0 8px 20px rgba(59, 130, 246, .08),
+		0 18px 40px rgba(59, 130, 246, .12);
 }
 
 /* Header */
-.ggr-seo-toggle{
-	display:flex;
-	justify-content:space-between;
-	align-items:center;
-	padding:16px 20px;
-	cursor:pointer;
-	background:#fff;
+
+.ggr-opportunity-header {
+
+	display: flex;
+
+	justify-content: space-between;
+
+	align-items: center;
+
+	margin-bottom: 14px;
 }
 
-.ggr-seo-toggle:hover{
-	background:#fafafa;
+.ggr-opportunity-title {
+
+	font-size: 16px;
+
+	font-weight: 700;
+
+	color: #1d4ed8;
 }
 
-.ggr-seo-toggle-left{
-	display:flex;
-	align-items:center;
-	gap:12px;
+.ggr-opportunity-badge {
+
+	background: #fee2e2;
+
+	color: #b91c1c;
+
+	font-size: 11px;
+
+	font-weight: 700;
+
+	padding: 7px 12px;
+
+	border-radius: 999px;
+
+	text-transform: uppercase;
+
+	letter-spacing: .3px;
 }
 
-.ggr-icon{
-	font-size:18px;
+/* Description */
+
+.ggr-opportunity-desc {
+
+	font-size: 14px;
+
+	line-height: 1.6;
+
+	color: #475569;
+
+	margin-bottom: 18px;
 }
 
-.ggr-subtitle{
-	font-size:12px;
-	color:#646970;
-	margin-top:2px;
+/* Fix List */
+
+.ggr-opportunity-list {
+
+	margin: 0;
+
+	padding: 0;
+
+	list-style: none;
 }
 
-.ggr-seo-toggle-right{
-	display:flex;
-	align-items:center;
-	gap:12px;
+.ggr-opportunity-list li {
+
+	display: flex;
+
+	align-items: center;
+
+	background: #ffffff;
+
+	border: 1px solid #e2e8f0;
+
+	border-radius: 10px;
+
+	padding: 12px 14px;
+
+	margin-bottom: 10px;
+
+	font-size: 14px;
+
+	color: #334155;
+
+	transition: all .2s ease;
 }
 
-.ggr-score{
-	background:#eef4ff;
-	color:#2271b1;
-	font-weight:700;
-	padding:6px 12px;
-	border-radius:20px;
-	font-size:13px;
+.ggr-opportunity-list li:hover {
+
+	transform: translateX(4px);
+
+	border-color: #bfdbfe;
+
+	box-shadow:
+		0 4px 10px rgba(59, 130, 246, .08);
 }
 
-.ggr-arrow{
-	font-size:14px;
-	color:#646970;
+/* Footer */
+
+.ggr-opportunity-footer {
+
+	display: flex;
+
+	justify-content: space-between;
+
+	align-items: center;
+
+	margin-top: 20px;
+
+	padding-top: 16px;
+
+	border-top: 1px dashed #cbd5e1;
 }
 
-/* Body */
-.ggr-seo-content{
-	padding:20px;
-	border-top:1px solid #f0f0f1;
+/* Current Score */
+
+.ggr-opportunity-current-score {
+
+	font-size: 14px;
+
+	color: #64748b;
 }
 
-.ggr-seo-content label{
-	font-weight:600;
-	display:block;
-	margin-bottom:8px;
+.ggr-opportunity-current-score strong {
+
+	color: #0f172a;
+
+	font-weight: 700;
 }
 
-/* Input */
-.ggr-focus-input{
-	width:100%;
-	max-width:540px;
-	height:42px;
-	padding:0 14px;
-	border:1px solid #c3c4c7;
-	border-radius:6px;
-	font-size:14px;
+/* Potential Gain */
+
+.ggr-opportunity-gain {
+
+	display: flex;
+
+	align-items: center;
+
+	gap: 10px;
 }
 
-.ggr-focus-input:focus{
-	border-color:#2271b1;
-	box-shadow:0 0 0 1px #2271b1;
-	outline:none;
+.ggr-opportunity-gain-label {
+
+	font-size: 13px;
+
+	color: #64748b;
 }
 
-/* Status Message */
-.ggr-keyword-status{
-	margin-top:16px;
-	font-size:14px;
-	font-weight:600;
+.ggr-score-pill-success {
+
+	background: #dcfce7;
+
+	color: #15803d;
+
+	padding: 6px 14px;
+
+	border-radius: 999px;
+
+	font-weight: 700;
+
+	font-size: 14px;
 }
 
-.ggr-status-success{
-	color:#15803d;
+/* Future Progress Bar */
+
+.ggr-opportunity-progress {
+
+	height: 8px;
+
+	background: #e5e7eb;
+
+	border-radius: 999px;
+
+	overflow: hidden;
+
+	margin-top: 14px;
 }
 
-.ggr-status-warning{
-	color:#b45309;
+.ggr-opportunity-progress-fill {
+
+	width: 40%;
+
+	height: 100%;
+
+	background: linear-gradient(90deg,
+			#3b82f6,
+			#60a5fa);
+
+	border-radius: 999px;
 }
 
-.ggr-status-error{
-	color:#dc2626;
-}
+/* ============================================
+   Responsive
+============================================ */
 
-/* SEO Checks Panel */
-.ggr-details-panel{
-	margin-top:20px;
-	padding:18px;
-	background:#f8f9fa;
-	border-radius:8px;
-	border:1px solid #ececec;
-}
-
-/* Checks Grid */
-.ggr-check-grid{
-	display:flex;
-	flex-wrap:wrap;
-	gap:12px;
-}
-
-/* Check Card */
-.ggr-check-item{
-	display:flex;
-	align-items:center;
-	gap:8px;
-
-	padding:10px 14px;
-
-	border-radius:8px;
-
-	font-size:13px;
-	font-weight:600;
-
-	transition:all .2s ease;
-}
-
-/* Passed */
-.ggr-check-item.success{
-	background:#ecfdf3;
-	border-left:4px solid #16a34a;
-	color:#166534;
-}
-
-/* Needs Improvement */
-.ggr-check-item.warning{
-	background:#fff7ed;
-	border-left:4px solid #f59e0b;
-	color:#9a3412;
-}
-
-/* Critical */
-.ggr-check-item.error{
-	background:#fef2f2;
-	border-left:4px solid #dc2626;
-	color:#991b1b;
-}
-
-/* Optional Future State */
-.ggr-check-item.neutral{
-		background:#f8fafc;
-        border-left:4px solid #cbd5e1;
-        color:#64748b;
-}
-
-.ggr-save-status{
-	margin-top:10px;
-	font-size:13px;
-	font-weight:600;
-	color:#2271b1;
-}
-
-.ggr-save-status.success{
-	color:#16a34a;
-}
-
-/* Responsive */
-@media (max-width:768px){
-
-	.ggr-seo-toggle{
-		flex-direction:column;
-		align-items:flex-start;
-		gap:10px;
+@media (max-width: 768px) {
+	.ggr-seo-toggle {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
 	}
 
-	.ggr-seo-toggle-right{
-		width:100%;
-		justify-content:flex-end;
+	.ggr-seo-toggle-right {
+		width: 100%;
+		justify-content: flex-end;
 	}
 
-	.ggr-focus-input{
-		max-width:100%;
+	.ggr-focus-input {
+		max-width: 100%;
 	}
 
-	.ggr-check-grid{
-		flex-direction:column;
+	.ggr-check-grid {
+		flex-direction: column;
+	}
+
+	.ggr-metric-grid {
+		grid-template-columns: 1fr;
 	}
 }

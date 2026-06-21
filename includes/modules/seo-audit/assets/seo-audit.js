@@ -208,7 +208,7 @@
       const badge = `<span class="sapc-kw-type-badge sapc-type-${esc(kw.post_type || "post")}">${esc(kw.post_type || "post")}</span>`;
       const keywordBadge = kw.has_focus_keyword
         ? `<span class="sapc-focus-keyword-badge sapc-focus-ok">
-            Focus: ${esc(kw.keyword)}
+            ${esc(kw.keyword)}
        </span>`
         : `<span class="sapc-focus-keyword-badge sapc-focus-missing">
             No Focus Keyword
