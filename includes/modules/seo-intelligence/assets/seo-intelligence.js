@@ -6,7 +6,18 @@ jQuery(document).ready(function ($) {
   */
 
   let ggrLastContent = "";
+
   let ggrLastTitle = "";
+
+  let ggrLastSlug = "";
+
+  let ggrLastFeaturedImage = false;
+
+  let ggrLastCategory = "";
+
+  let ggrLastMetaTitle = "";
+
+  let ggrLastMetaDescription = "";
 
   let ggrKeywordTimer;
 
@@ -70,6 +81,90 @@ jQuery(document).ready(function ($) {
             .removeClass("error")
             .addClass("success")
             .text("✓ Focus keyword saved");
+
+          setTimeout(function () {
+            $(".ggr-save-status").fadeOut(200, function () {
+              $(this).text("").show();
+            });
+          }, 1500);
+        }
+      },
+    );
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | Save Meta Title
+  |--------------------------------------------------------------------------
+  */
+
+  $("#ggr-meta-title").on("blur", function () {
+    let metaTitle = $(this).val().trim();
+
+    let postId = $("#ggr_post_id").val();
+
+    $("#ggr-meta-title-save-status")
+      .removeClass("success error")
+      .text("Saving...");
+
+    $.post(
+      ajaxurl,
+      {
+        action: "ggrwa_save_meta_title",
+        post_id: postId,
+        meta_title: metaTitle,
+      },
+      function (response) {
+        if (response.success) {
+          $("#ggr-meta-title-save-status")
+            .removeClass("error")
+            .addClass("success")
+            .text("✓ Meta title saved");
+
+          setTimeout(function () {
+            $("#ggr-meta-title-save-status").fadeOut(200, function () {
+              $(this).text("").show();
+            });
+          }, 1500);
+        }
+      },
+    );
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | Save Meta Description
+  |--------------------------------------------------------------------------
+  */
+
+  $("#ggr-meta-description").on("blur", function () {
+    let metaDescription = $(this).val().trim();
+
+    let postId = $("#ggr_post_id").val();
+
+    $("#ggr-meta-description-save-status")
+      .removeClass("success error")
+      .text("Saving...");
+
+    $.post(
+      ajaxurl,
+      {
+        action: "ggrwa_save_meta_description",
+        post_id: postId,
+        meta_description: metaDescription,
+      },
+      function (response) {
+        if (response.success) {
+          $("#ggr-meta-description-save-status")
+            .removeClass("error")
+            .addClass("success")
+            .text("✓ Meta description saved");
+
+          setTimeout(function () {
+            $("#ggr-meta-description-save-status").fadeOut(200, function () {
+              $(this).text("").show();
+            });
+          }, 1500);
         }
       },
     );
@@ -102,16 +197,46 @@ jQuery(document).ready(function ($) {
   */
 
   setInterval(function () {
-    let currentContent = getPostContent();
+    let currentContent = getPostContentHTML();
 
     let currentTitle = getPostTitle();
 
-    if (currentContent !== ggrLastContent || currentTitle !== ggrLastTitle) {
+    let currentSlug = getPostSlug();
+
+    let currentFeaturedImage = hasFeaturedImage();
+
+    let currentCategory = getSelectedCategory();
+
+    let currentMetaTitle = $("#ggr-meta-title").val() || "";
+
+    let currentMetaDescription = $("#ggr-meta-description").val() || "";
+
+    if (
+      currentContent !== ggrLastContent ||
+      currentTitle !== ggrLastTitle ||
+      currentSlug !== ggrLastSlug ||
+      currentCategory !== ggrLastCategory ||
+      currentFeaturedImage !== ggrLastFeaturedImage ||
+      currentMetaTitle !== ggrLastMetaTitle ||
+      currentMetaDescription !== ggrLastMetaDescription
+    ) {
       ggrLastContent = currentContent;
 
       ggrLastTitle = currentTitle;
 
-      triggerAnalysis();
+      ggrLastSlug = currentSlug;
+
+      ggrLastCategory = currentCategory;
+
+      ggrLastFeaturedImage = currentFeaturedImage;
+
+      ggrLastMetaTitle = currentMetaTitle;
+
+      ggrLastMetaDescription = currentMetaDescription;
+
+      setTimeout(function () {
+        triggerAnalysis();
+      }, 500);
     }
   }, 800);
 
@@ -138,12 +263,129 @@ jQuery(document).ready(function ($) {
   }
 
   /*
+|--------------------------------------------------------------------------
+| SEO Snippet Optimization
+|--------------------------------------------------------------------------
+*/
+
+  function updateSnippetOptimization() {
+    let metaTitle = ($("#ggr-meta-title").val() || "").trim();
+
+    let metaDescription = ($("#ggr-meta-description").val() || "").trim();
+
+    let titleLength = metaTitle.length;
+
+    let descriptionLength = metaDescription.length;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Title Validation
+    |--------------------------------------------------------------------------
+    */
+
+    let titleStatus = "Neutral";
+    let titleClass = "neutral";
+    let titleValid = false;
+
+    if (titleLength > 0 && titleLength < 30) {
+      titleStatus = "Too Short";
+      titleClass = "warning";
+    } else if (titleLength >= 30 && titleLength <= 60) {
+      titleStatus = "Optimized";
+      titleClass = "success";
+      titleValid = true;
+    } else if (titleLength > 60) {
+      titleStatus = "Too Long";
+      titleClass = "error";
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Description Validation
+    |--------------------------------------------------------------------------
+    */
+
+    let descriptionStatus = "Neutral";
+    let descriptionClass = "neutral";
+    let descriptionValid = false;
+
+    if (descriptionLength > 0 && descriptionLength < 120) {
+      descriptionStatus = "Too Short";
+      descriptionClass = "warning";
+    } else if (descriptionLength >= 120 && descriptionLength <= 160) {
+      descriptionStatus = "Optimized";
+      descriptionClass = "success";
+      descriptionValid = true;
+    } else if (descriptionLength > 160) {
+      descriptionStatus = "Too Long";
+      descriptionClass = "error";
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Status Badges
+    |--------------------------------------------------------------------------
+    */
+    $("#ggr-meta-title-status")
+      .removeClass("success warning error neutral")
+      .addClass(titleClass)
+      .text(titleStatus + " (" + titleLength + "/60)");
+
+    $("#ggr-meta-description-status")
+      .removeClass("success warning error neutral")
+      .addClass(descriptionClass)
+      .text(descriptionStatus + " (" + descriptionLength + "/160)");
+
+    /*
+    |--------------------------------------------------------------------------
+    | Snippet Score
+    |--------------------------------------------------------------------------
+    */
+
+    let snippetScore = 0;
+
+    if (titleValid) {
+      snippetScore++;
+    }
+
+    if (descriptionValid) {
+      snippetScore++;
+    }
+
+    $("#ggr-snippet-score")
+      .text(snippetScore + "/2")
+      .removeClass("success warning error neutral");
+
+    if (snippetScore === 0) {
+      $("#ggr-snippet-score").addClass("error");
+    } else if (snippetScore === 1) {
+      $("#ggr-snippet-score").addClass("warning");
+    } else {
+      $("#ggr-snippet-score").addClass("success");
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SERP Preview
+    |--------------------------------------------------------------------------
+    */
+
+    $("#ggr-serp-title").text(metaTitle || "Your SEO Title Preview");
+
+    $("#ggr-serp-description").text(
+      metaDescription || "Your meta description preview will appear here.",
+    );
+  }
+
+  /*
   |--------------------------------------------------------------------------
   | Initial Analysis
   |--------------------------------------------------------------------------
   */
 
   setTimeout(triggerAnalysis, 1000);
+
+  setTimeout(updateSnippetOptimization, 1000);
 
   /*
   |--------------------------------------------------------------------------
@@ -178,6 +420,16 @@ jQuery(document).ready(function ($) {
     return ($("#title").val() || "").toLowerCase();
   }
 
+  /*
+  |--------------------------------------------------------------------------
+  | Get Post Slug
+  |--------------------------------------------------------------------------
+  */
+  function getPostSlug() {
+    let permalink = $("#sample-permalink").text() || "";
+
+    return permalink.trim().toLowerCase();
+  }
   /*
   |--------------------------------------------------------------------------
   | Get Plain Text Content
@@ -233,6 +485,62 @@ jQuery(document).ready(function ($) {
 
   /*
   |--------------------------------------------------------------------------
+  | Get Post Category
+  |--------------------------------------------------------------------------
+  */
+
+  function getSelectedCategory() {
+    let selectedCategory = "";
+
+    $("#categorychecklist input[type='checkbox']:checked").each(function () {
+      let categoryName = $(this)
+        .closest("label")
+        .contents()
+        .filter(function () {
+          return this.nodeType === 3;
+        })
+        .text()
+        .trim();
+
+      if (categoryName) {
+        selectedCategory = categoryName;
+
+        return false;
+      }
+    });
+
+    return selectedCategory;
+  }
+
+  /*
+|--------------------------------------------------------------------------
+| Featured Image Check
+|--------------------------------------------------------------------------
+*/
+
+  function hasFeaturedImage() {
+    // Gutenberg
+
+    if (
+      typeof wp !== "undefined" &&
+      wp.data &&
+      wp.data.select &&
+      wp.data.select("core/editor")
+    ) {
+      let mediaId = wp.data
+        .select("core/editor")
+        .getEditedPostAttribute("featured_media");
+
+      return parseInt(mediaId || 0) > 0;
+    }
+
+    // Classic Editor
+
+    return parseInt($("#_thumbnail_id").val() || 0) > 0;
+  }
+
+  /*
+  |--------------------------------------------------------------------------
   | Update Foundation Card
   |--------------------------------------------------------------------------
   */
@@ -242,8 +550,25 @@ jQuery(document).ready(function ($) {
 
     $(selector)
       .removeClass("success warning error neutral")
-      .addClass(passed ? "success" : "warning")
-      .html(icon + " " + label);
+      .addClass(passed ? "success" : "warning");
+
+    let labelElement = $(selector).find(".ggr-check-label");
+
+    if (labelElement.length) {
+      labelElement.text(icon + " " + label);
+    } else {
+      $(selector).text(icon + " " + label);
+    }
+  }
+
+  function updateQuickFix(selector, passed, label) {
+    if (passed) {
+      $(selector).hide();
+    } else {
+      $(selector)
+        .show()
+        .html("❌ " + label);
+    }
   }
 
   /*
@@ -262,6 +587,8 @@ jQuery(document).ready(function ($) {
     updateCheck("#ggr-check-content", false, "Keyword in Content");
 
     updateCheck("#ggr-check-meta", false, "Meta Description");
+
+    updateCheck("#ggr-check-category", false, "Category Assigned");
   }
 
   /*
@@ -354,6 +681,44 @@ jQuery(document).ready(function ($) {
     }
 
     return content.split(" ").filter(Boolean).length;
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Inbuilt Wordpress Count Logic
+  |--------------------------------------------------------------------------
+  */
+
+  function getWordPressWordCount() {
+    let count = 0;
+
+    $(".word-count").each(function () {
+      let text = $(this).text();
+
+      let match = text.match(/\d+/);
+
+      if (match) {
+        count = parseInt(match[0], 10);
+      }
+    });
+
+    return count;
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Safe Wordpress Count Logic
+  |--------------------------------------------------------------------------
+  */
+
+  function getSafeWordCount(content) {
+    let wpCount = getWordPressWordCount();
+
+    if (wpCount > 0) {
+      return wpCount;
+    }
+
+    return getWordCount(content);
   }
 
   /*
@@ -459,11 +824,11 @@ jQuery(document).ready(function ($) {
 
     /*
     |--------------------------------------------------------------------------
-    | Featured Image
+    | PostFeatured Image
     |--------------------------------------------------------------------------
     */
 
-    let featuredImage = $(".editor-post-featured-image img").length > 0;
+    let featuredImage = hasFeaturedImage();
 
     updateMetric("#ggr-featured-image", featuredImage ? "Yes" : "No");
   }
@@ -475,6 +840,16 @@ jQuery(document).ready(function ($) {
   */
 
   function runRealtimeSEO(keyword) {
+    let postType = $("#post_type").val();
+    let categoryName = getSelectedCategory();
+    let metaTitle = $("#ggr-meta-title").val() || "";
+    let metaDescription = $("#ggr-meta-description").val() || "";
+    let featuredImage = hasFeaturedImage();
+    let categoryValid =
+      categoryName && categoryName.toLowerCase() !== "uncategorized";
+
+    checkPermalinkStructure();
+
     keyword = normalizeText(keyword);
 
     if (!keyword.length) {
@@ -495,19 +870,38 @@ jQuery(document).ready(function ($) {
       meta = $("#rank_math_description").val() || "";
     }
 
-    let slug = ($("#editable-post-name-full").text() || "")
-      .toLowerCase()
-      .trim();
+    /*
+    |--------------------------------------------------------------------------
+    | URL / Slug
+    |--------------------------------------------------------------------------
+    */
 
-    let titleMatch = isExactMatch(title, keyword);
+    let slug = getPostSlug();
+
+    let keywordSlug = normalizeText(keyword).replace(/\s+/g, "-");
+
+    let normalizedSlug = normalizeText(slug).replace(/\s+/g, "-");
+
+    let titleMatch = normalizeText(title).includes(keyword);
+
+    let metaTitleMatch = getMatchType(metaTitle, keyword) !== "missing";
+
+    let metaDescriptionMatch =
+      getMatchType(metaDescription, keyword) !== "missing";
 
     let contentMatch = getMatchType(content, keyword) !== "missing";
 
     let metaMatch = getMatchType(meta, keyword) !== "missing";
 
-    let urlMatch = slug === keyword.replace(/\s+/g, "-");
+    let urlMatch = normalizedSlug.includes(keywordSlug);
 
-    let wordCount = getWordCount(content);
+    /*
+    |--------------------------------------------------------------------------
+    | Metrics
+    |--------------------------------------------------------------------------
+    */
+
+    let wordCount = getSafeWordCount(content);
 
     let occurrences = countKeywordOccurrences(content, keyword);
 
@@ -516,29 +910,162 @@ jQuery(document).ready(function ($) {
     let keywordOptimized =
       titleMatch && contentMatch && wordCount >= 600 && occurrences >= 2;
 
-    updateCheck("#ggr-check-title", titleMatch, "Keyword in Title");
+    let passedChecks = 0;
 
-    updateCheck("#ggr-check-url", urlMatch, "Keyword in URL");
+    if (titleMatch) passedChecks++;
+    if (urlMatch) passedChecks++;
+    if (contentMatch) passedChecks++;
+    if (wordCount >= 600) passedChecks++;
+    if (occurrences >= 2) passedChecks++;
 
-    updateCheck("#ggr-check-content", contentMatch, "Keyword in Content");
+    let keywordExplanation = `
+      <div class="ggr-keyword-details-header">
+          Focus Keyword Optimization
+      </div>
 
-    updateCheck("#ggr-check-meta", metaMatch, "Meta Description");
+      <div class="ggr-keyword-details-item">
+          ${titleMatch ? "✅" : "❌"} Keyword in Title
+      </div>
 
-    updateCheck(
-      "#ggr-check-keyword",
-      keywordOptimized,
-      "Focus Keyword Optimized",
-    );
+      <div class="ggr-keyword-details-item">
+          ${urlMatch ? "✅" : "❌"} Keyword in URL
+      </div>
 
-    if (keywordOptimized) score += 20;
+      <div class="ggr-keyword-details-item">
+          ${contentMatch ? "✅" : "❌"} Keyword in Content
+      </div>
 
-    if (titleMatch) score += 20;
+      <div class="ggr-keyword-details-item">
+          ${wordCount >= 600 ? "✅" : "❌"} Word Count (${wordCount}/600)
+      </div>
 
-    if (urlMatch) score += 20;
+      <div class="ggr-keyword-details-item">
+          ${occurrences >= 2 ? "✅" : "❌"} Keyword Usage (${occurrences}/2)
+      </div>
 
-    if (contentMatch) score += 20;
+      <div class="ggr-keyword-details-footer">
+          Progress: ${passedChecks}/5 Requirements Met
+      </div>
+      `;
 
-    if (metaMatch) score += 20;
+    $("#ggr-keyword-details").html(keywordExplanation);
+
+    /*
+    |--------------------------------------------------------------------------
+    | SEO Checks (Future Scalable)
+    |--------------------------------------------------------------------------
+    */
+
+    const seoChecks = [
+      {
+        key: "keyword",
+        label: "Focus Keyword Optimized",
+        passed: keywordOptimized,
+      },
+
+      {
+        key: "title",
+        label: "Keyword in Title",
+        passed: titleMatch,
+        quickFix: "Add focus keyword to title",
+      },
+
+      {
+        key: "url",
+        label: "Keyword in URL",
+        passed: urlMatch,
+        quickFix: "Add focus keyword to URL",
+      },
+
+      {
+        key: "content",
+        label: "Keyword in Content",
+        passed: contentMatch,
+        quickFix: "Add focus keyword to content",
+      },
+
+      {
+        key: "meta-title",
+        label: "Meta Title",
+        passed: metaTitleMatch,
+        quickFix: "Add focus keyword to meta title",
+      },
+
+      {
+        key: "meta-description",
+        label: "Meta Description",
+        passed: metaDescriptionMatch,
+        quickFix: "Add focus keyword to meta description",
+      },
+
+      {
+        key: "category",
+        label: "Category Assigned",
+        passed: postType !== "post" ? true : categoryValid,
+        quickFix: "Assign a relevant category",
+      },
+
+      {
+        key: "featured-image",
+        label: "Featured Image",
+        passed: featuredImage,
+        quickFix: "Add Featured Image",
+      },
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Foundation Checks
+    |--------------------------------------------------------------------------
+    */
+
+    seoChecks.forEach((check) => {
+      if (check.key === "keyword") {
+        $("#ggr-check-keyword")
+          .removeClass("success warning error neutral")
+          .addClass(keywordOptimized ? "success" : "warning");
+
+        $("#ggr-check-keyword .ggr-check-label").text(
+          (keywordOptimized ? "✓ " : "⚠ ") + "Focus Keyword Optimized",
+        );
+
+        return;
+      }
+
+      updateCheck("#ggr-check-" + check.key, check.passed, check.label);
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Quick Fixes
+    |--------------------------------------------------------------------------
+    */
+
+    seoChecks.forEach((check) => {
+      if (!check.quickFix) {
+        return;
+      }
+
+      updateQuickFix("#ggr-fix-" + check.key, check.passed, check.quickFix);
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Score
+    |--------------------------------------------------------------------------
+    */
+
+    let totalChecks = seoChecks.length;
+
+    let passedChecksCount = seoChecks.filter((check) => check.passed).length;
+
+    score = Math.round((passedChecksCount / totalChecks) * 100);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Metrics UI
+    |--------------------------------------------------------------------------
+    */
 
     updateMetric("#ggr-word-count", wordCount);
 
@@ -552,32 +1079,98 @@ jQuery(document).ready(function ($) {
 
     $("#ggr-potential-score").text("+" + (100 - score));
 
-    let foundation = 0;
+    /*
+    |--------------------------------------------------------------------------
+    | Foundation Count
+    |--------------------------------------------------------------------------
+    */
 
-    if (keywordOptimized) foundation++;
+    let foundation = seoChecks.filter((check) => check.passed).length;
 
-    if (titleMatch) foundation++;
+    let totalseoChecks = seoChecks.length;
 
-    if (urlMatch) foundation++;
+    $("#ggr-foundation-count").text(
+    foundation + "/" + totalseoChecks
+);
 
-    if (contentMatch) foundation++;
+    /*
+    |--------------------------------------------------------------------------
+    | Opportunities
+    |--------------------------------------------------------------------------
+    */
 
-    if (metaMatch) foundation++;
-
-    $("#ggr-foundation-count").text(foundation + "/5");
-
-    let opportunities = 0;
-
-    if (!titleMatch) opportunities++;
-
-    if (!urlMatch) opportunities++;
-
-    if (!contentMatch) opportunities++;
-
-    if (!metaMatch) opportunities++;
+    let opportunities = seoChecks.filter(
+      (check) => check.quickFix && !check.passed,
+    ).length;
 
     $("#ggr-opportunity-count").text(opportunities);
 
     runAdvancedAnalysis();
   }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Check Permalink Structure
+  |--------------------------------------------------------------------------
+  */
+  function checkPermalinkStructure() {
+    let structure = $("#ggr_permalink_structure").val() || "";
+
+    let warningBox = $("#ggr-permalink-warning");
+
+    if (!warningBox.length) {
+      return;
+    }
+
+    warningBox.hide();
+
+    if (structure === "" || structure === "/archives/%post_id%") {
+      warningBox.html(`
+            ⚠ <strong>SEO Friendly URLs Recommended</strong><br>
+            Your site is using Numeric Permalinks.<br>
+            Recommended: Post Name<br><br>
+                 
+            <a href="${ajaxurl.replace(
+              "/admin-ajax.php",
+              "/options-permalink.php",
+            )}" target="_blank">
+                Fix Permalink
+            </a> | <a href="#" id="ggr-view-permalink">
+                  View permalink ↗
+                  </a>
+        `);
+
+      warningBox.show();
+    }
+  }
+
+  $(document).on(
+    "input",
+    "#ggr-meta-title, #ggr-meta-description",
+    function () {
+      updateSnippetOptimization();
+    },
+  );
+
+  $(document).on("click", "#ggr-view-permalink", function (e) {
+    e.preventDefault();
+
+    let box = document.getElementById("edit-slug-box");
+
+    if (box) {
+      box.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+
+      box.style.background = "#fff3cd";
+
+      setTimeout(function () {
+        box.style.background = "";
+      }, 2000);
+    }
+  });
+  $(document).on("click", "#ggr-keyword-toggle", function () {
+    $("#ggr-keyword-details").stop(true, true).slideToggle(150);
+  });
 });

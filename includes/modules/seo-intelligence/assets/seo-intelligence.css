@@ -236,7 +236,7 @@ css
 }
 
 /* ============================================
-   Check Grid
+   SEO Foundation Checks
 ============================================ */
 
 .ggr-check-grid {
@@ -245,9 +245,14 @@ css
 	gap: 12px;
 }
 
+.ggr-check-label {
+	flex: 1;
+}
+
 .ggr-check-item {
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	gap: 8px;
 
 	padding: 12px 16px;
@@ -257,10 +262,283 @@ css
 	font-size: 13px;
 	font-weight: 600;
 
-	transition: all 0.2s ease;
+	transition: all .2s ease;
+}
+
+/* ============================================
+   Why Link
+============================================ */
+
+.ggr-why-link {
+	color: #2563eb;
+
+	font-size: 12px;
+	font-weight: 700;
+
+	cursor: pointer;
+
+	padding: 4px 8px;
+
+	border-radius: 20px;
+
+	background: #eff6ff;
+
+	border: 1px solid #bfdbfe;
+
+	transition: all .2s ease;
+}
+
+.ggr-why-link:hover {
+	background: #2563eb;
+
+	color: #fff;
+}
+
+/* ============================================
+   Keyword Explanation Panel
+============================================ */
+
+.ggr-keyword-details {
+
+	display: none;
+
+	width: 100%;
+
+	margin-top: 10px;
+
+	padding: 16px;
+
+	border-radius: 12px;
+
+	background: #f8fafc;
+
+	border: 1px solid #e2e8f0;
+
+	font-size: 13px;
+
+	line-height: 1.8;
+
+	color: #334155;
+
+	margin-top: 8px;
+
+	margin-bottom: 8px;
+}
+
+.ggr-keyword-details-header {
+
+	font-size: 14px;
+
+	font-weight: 700;
+
+	margin-bottom: 12px;
+
+	padding-bottom: 10px;
+
+	border-bottom: 1px solid #e2e8f0;
+
+	color: #0f172a;
+}
+
+.ggr-keyword-details-item {
+	padding: 4px 0;
+	margin-bottom: 8px;
+}
+
+.ggr-keyword-details-footer {
+
+	margin-top: 12px;
+
+	padding-top: 10px;
+
+	border-top: 1px solid #e2e8f0;
+
+	font-size: 12px;
+
+	font-weight: 600;
+
+	color: #475569;
 }
 
 /* Success */
+
+
+/* ============================================
+   SEO Snippet Optimization
+============================================ */
+
+.ggr-form-group {
+
+	margin-bottom: 20px;
+}
+
+.ggr-label {
+
+	display: block;
+
+	margin-bottom: 8px;
+
+	font-size: 13px;
+
+	font-weight: 600;
+
+	color: #111827;
+}
+
+.ggr-input,
+.ggr-textarea {
+
+	width: 100%;
+
+	border: 1px solid #dbe2ea;
+
+	border-radius: 10px;
+
+	padding: 12px 14px;
+
+	font-size: 14px;
+
+	background: #fff;
+
+	transition: all .2s ease;
+}
+
+.ggr-input:focus,
+.ggr-textarea:focus {
+
+	outline: none;
+
+	border-color: #2563eb;
+
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, .10);
+}
+
+.ggr-textarea {
+
+	resize: vertical;
+
+	min-height: 90px;
+}
+
+.ggr-input-meta {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 10px;
+}
+
+.ggr-snippet-status {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: 8px 14px;
+
+	border-radius: 999px;
+
+	font-size: 13px;
+	font-weight: 600;
+
+	line-height: 1;
+
+	white-space: nowrap;
+
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+}
+
+.ggr-snippet-status.success {
+	background: #dcfce7;
+	color: #166534;
+}
+
+.ggr-snippet-status.warning {
+	background: #fef3c7;
+	color: #92400e;
+}
+
+.ggr-snippet-status.error {
+	background: #fee2e2;
+	color: #b91c1c;
+}
+
+.ggr-snippet-status.neutral {
+	background: #f3f4f6;
+	color: #6b7280;
+}
+
+/* ============================================
+   SERP Preview
+============================================ */
+
+.ggr-serp-preview {
+
+	margin-top: 24px;
+
+	border: 1px solid #e5e7eb;
+
+	border-radius: 12px;
+
+	background: #fafafa;
+
+	padding: 18px;
+}
+
+.ggr-serp-url {
+
+	font-size: 12px;
+
+	color: #188038;
+
+	margin-bottom: 6px;
+
+	word-break: break-word;
+}
+
+.ggr-serp-title {
+
+	font-size: 22px;
+
+	line-height: 1.3;
+
+	color: #1a0dab;
+
+	margin-bottom: 6px;
+
+	cursor: pointer;
+}
+
+.ggr-serp-description {
+
+	font-size: 14px;
+
+	line-height: 1.5;
+
+	color: #4d5156;
+}
+
+/* ============================================
+   Length Status
+============================================ */
+
+.ggr-length-good {
+
+	color: #16a34a;
+
+	font-weight: 600;
+}
+
+.ggr-length-warning {
+
+	color: #d97706;
+
+	font-weight: 600;
+}
+
+.ggr-length-error {
+
+	color: #dc2626;
+
+	font-weight: 600;
+}
 
 .ggr-check-item.success {
 	background: #ecfdf3;
@@ -579,6 +857,15 @@ css
 			#60a5fa);
 
 	border-radius: 999px;
+}
+
+.ggr-permalink-warning {
+	margin-top: 12px;
+	padding: 12px;
+	border-left: 4px solid #f59e0b;
+	background: #fff7ed;
+	border-radius: 6px;
+	font-size: 13px;
 }
 
 /* ============================================

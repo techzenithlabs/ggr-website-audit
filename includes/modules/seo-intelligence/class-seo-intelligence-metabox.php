@@ -147,6 +147,41 @@ class GGRWA_SEO_Intelligence_Metabox {
 			$keyword
 		);
 
+
+		$meta_title = '';
+
+		if (isset($_POST['_ggrwa_meta_title'])) {
+
+			$meta_title = sanitize_text_field(
+				wp_unslash(
+					$_POST['_ggrwa_meta_title']
+				)
+			);
+		}
+
+		update_post_meta(
+			$post_id,
+			'_ggrwa_meta_title',
+			$meta_title
+		);
+
+		$meta_description = '';
+
+		if (isset($_POST['_ggrwa_meta_description'])) {
+
+			$meta_description = sanitize_textarea_field(
+				wp_unslash(
+					$_POST['_ggrwa_meta_description']
+				)
+			);
+		}
+
+		update_post_meta(
+			$post_id,
+			'_ggrwa_meta_description',
+			$meta_description
+		);
+
         /**
          * Clear dashboard cache when SEO keyword changes.
          *

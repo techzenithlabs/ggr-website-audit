@@ -2,7 +2,8 @@
 if (! defined('ABSPATH')) {
     exit;
 }
-
+global $wp_rewrite;
+$permalink_structure = $wp_rewrite->permalink_structure;
 $score  = empty($keyword) ? 0 : $analysis['score'];
 $checks = $analysis['checks'];
 ?>
@@ -67,6 +68,11 @@ $checks = $analysis['checks'];
                     type="hidden"
                     id="ggr_post_id"
                     value="<?php echo esc_attr($post->ID); ?>" />
+
+                <input
+                    type="hidden"
+                    id="ggr_permalink_structure"
+                    value="<?php echo esc_attr($permalink_structure); ?>">
 
                 <div class="ggr-save-status"></div>
 
@@ -138,11 +144,28 @@ $checks = $analysis['checks'];
                                 ❌ Add focus keyword to content
                             </li>
 
-                            <li id="ggr-fix-meta">
+                            <li id="ggr-fix-meta-title">
+                                ❌ Add focus keyword to meta title
+                            </li>
+
+                            <li id="ggr-fix-meta-description">
                                 ❌ Add focus keyword to meta description
                             </li>
 
+                            <li id="ggr-fix-featured-image">
+                                ❌ Add Featured Image
+                            </li>
+
+                            <li id="ggr-fix-category">
+                                ❌ Assign a relevant category
+                            </li>
+
                         </ul>
+                        <div
+                            id="ggr-permalink-warning"
+                            class="ggr-permalink-warning"
+                            style="display:none;">
+                        </div>
 
                         <div class="ggr-opportunity-footer">
 
@@ -190,7 +213,7 @@ $checks = $analysis['checks'];
                 <span
                     id="ggr-foundation-count"
                     class="ggr-section-badge">
-                    0/5
+                    0/8
                 </span>
 
             </div>
@@ -200,23 +223,202 @@ $checks = $analysis['checks'];
                 <div class="ggr-check-grid">
 
                     <div id="ggr-check-keyword" class="ggr-check-item neutral">
-                        ○ Focus Keyword
+
+                        <span class="ggr-check-label">
+                            ○ Focus Keyword Optimized
+                        </span>
+                        <span
+                            id="ggr-keyword-toggle"
+                            class="ggr-why-link">
+                            Why?
+                        </span>
+
+
+                    </div>
+                    <div
+                        id="ggr-keyword-details"
+                        class="ggr-keyword-details">
                     </div>
 
+
+
                     <div id="ggr-check-title" class="ggr-check-item neutral">
-                        ○ Keyword in Title
+
+                        <span class="ggr-check-label">
+                            ○ Keyword in Title
+                        </span>
+
                     </div>
 
                     <div id="ggr-check-url" class="ggr-check-item neutral">
-                        ○ Keyword in URL
+
+                        <span class="ggr-check-label">
+                            ○ Keyword in URL
+                        </span>
+
                     </div>
 
                     <div id="ggr-check-content" class="ggr-check-item neutral">
-                        ○ Keyword in Content
+
+                        <span class="ggr-check-label">
+                            ○ Keyword in Content
+                        </span>
+
                     </div>
 
-                    <div id="ggr-check-meta" class="ggr-check-item neutral">
-                        ○ Meta Description
+                    <div id="ggr-check-meta-title" class="ggr-check-item neutral">
+
+                        <span class="ggr-check-label">
+                            ○ Meta Title
+                        </span>
+
+                    </div>
+
+                    <div id="ggr-check-meta-description" class="ggr-check-item neutral">
+
+                        <span class="ggr-check-label">
+                            ○ Meta Description
+                        </span>
+
+                    </div>
+
+                    <div id="ggr-check-featured-image" class="ggr-check-item neutral">
+
+                        <span class="ggr-check-label">
+                            ○ Featured Image
+                        </span>
+
+                    </div>
+
+                    <div id="ggr-check-category" class="ggr-check-item neutral">
+
+                        <span class="ggr-check-label">
+                            ○ Category Assigned
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="ggr-card">
+
+            <div class="ggr-card-header">
+
+                SEO Snippet Optimization
+
+                <span
+                    id="ggr-snippet-score"
+                    class="ggr-section-badge">
+                    0/2
+                </span>
+
+            </div>
+
+            <div class="ggr-card-body">
+
+                <!-- Meta Title -->
+
+                <div class="ggr-form-group">
+
+                    <label class="ggr-label">
+
+                        Meta Title
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="ggr-meta-title"
+                        class="ggr-input" name="_ggrwa_meta_title" value="<?php echo esc_attr(
+                                                                                get_post_meta(
+                                                                                    $post->ID,
+                                                                                    '_ggrwa_meta_title',
+                                                                                    true
+                                                                                )
+                                                                            ); ?>"
+                        placeholder="Enter SEO Meta Title">
+
+                    <div id="ggr-meta-title-save-status" class="ggr-save-status"></div>
+
+                    <div class="ggr-input-meta">
+                        <span
+                            id="ggr-meta-title-status"
+                            class="ggr-snippet-status warning">
+                            Too Short
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Meta Description -->
+
+                <div class="ggr-form-group">
+
+                    <label class="ggr-label">
+
+                        Meta Description
+
+                    </label>
+
+                    <textarea
+                        id="ggr-meta-description"
+                        class="ggr-textarea"
+                        name="_ggrwa_meta_description"
+                        rows="5"
+                        placeholder="Write a compelling meta description..."><?php
+                                                                                echo esc_textarea(
+                                                                                    get_post_meta(
+                                                                                        $post->ID,
+                                                                                        '_ggrwa_meta_description',
+                                                                                        true
+                                                                                    )
+                                                                                );
+                                                                                ?></textarea>
+                    <div id="ggr-meta-description-save-status" class="ggr-save-status"></div>
+
+                    <div class="ggr-input-meta">
+
+                        <span
+                            id="ggr-meta-description-status"
+                            class="ggr-snippet-status warning">
+                            Too Short
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Google Preview -->
+
+                <div class="ggr-serp-preview">
+
+                    <div
+                        id="ggr-serp-url"
+                        class="ggr-serp-url">
+
+                        yourdomain.com/sample-post
+
+                    </div>
+
+                    <div
+                        id="ggr-serp-title"
+                        class="ggr-serp-title">
+
+                        Your SEO Title Preview
+
+                    </div>
+
+                    <div
+                        id="ggr-serp-description"
+                        class="ggr-serp-description">
+
+                        Your meta description preview will appear here.
+
                     </div>
 
                 </div>
