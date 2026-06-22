@@ -1029,6 +1029,11 @@ jQuery(document).ready(function ($) {
           (keywordOptimized ? "✓ " : "⚠ ") + "Focus Keyword Optimized",
         );
 
+        $("#ggr-keyword-toggle")
+          .text(keywordOptimized ? "View Details" : "Why?")
+          .removeClass("success warning")
+          .addClass(keywordOptimized ? "success" : "warning");
+
         return;
       }
 
@@ -1089,9 +1094,7 @@ jQuery(document).ready(function ($) {
 
     let totalseoChecks = seoChecks.length;
 
-    $("#ggr-foundation-count").text(
-    foundation + "/" + totalseoChecks
-);
+    $("#ggr-foundation-count").text(foundation + "/" + totalseoChecks);
 
     /*
     |--------------------------------------------------------------------------
@@ -1104,6 +1107,14 @@ jQuery(document).ready(function ($) {
     ).length;
 
     $("#ggr-opportunity-count").text(opportunities);
+
+    if (opportunities === 0) {
+      $("#ggr-opportunity-badge").text("ALL FIXED").addClass("success");
+    } else {
+      $("#ggr-opportunity-badge")
+        .text("ACTION REQUIRED")
+        .removeClass("success");
+    }
 
     runAdvancedAnalysis();
   }

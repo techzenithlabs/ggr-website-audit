@@ -119,7 +119,7 @@ $checks = $analysis['checks'];
                                 SEO Opportunities Found
                             </div>
 
-                            <div class="ggr-opportunity-badge">
+                            <div class="ggr-opportunity-badge" id="ggr-opportunity-badge">
                                 ACTION REQUIRED
                             </div>
 
@@ -397,229 +397,27 @@ $checks = $analysis['checks'];
 
                 <div class="ggr-serp-preview">
 
-                    <div
+                    <<div
                         id="ggr-serp-url"
                         class="ggr-serp-url">
 
-                        yourdomain.com/sample-post
-
-                    </div>
-
-                    <div
-                        id="ggr-serp-title"
-                        class="ggr-serp-title">
-
-                        Your SEO Title Preview
-
-                    </div>
-
-                    <div
-                        id="ggr-serp-description"
-                        class="ggr-serp-description">
-
-                        Your meta description preview will appear here.
-
-                    </div>
+                        <?php echo esc_url(get_permalink($post->ID)); ?>
 
                 </div>
 
-            </div>
+                <div
+                    id="ggr-serp-title"
+                    class="ggr-serp-title">
 
-        </div>
-
-        <!-- =========================================
-             Content Analysis
-        ========================================== -->
-
-        <div class="ggr-card">
-
-            <div class="ggr-card-header">
-                Content Analysis
-            </div>
-
-            <div class="ggr-card-body">
-
-                <div class="ggr-metric-grid">
-
-                    <div class="ggr-metric-card">
-
-                        <span class="ggr-metric-value" id="ggr-word-count">
-                            0
-                        </span>
-
-                        <span class="ggr-metric-label">
-                            Word Count
-                        </span>
-
-                    </div>
-
-                    <div class="ggr-metric-card">
-
-                        <span class="ggr-metric-value" id="ggr-keyword-occurrences">
-                            0
-                        </span>
-
-                        <span class="ggr-metric-label">
-                            Keyword Occurrences
-                        </span>
-
-                    </div>
-
-                    <div class="ggr-metric-card">
-
-                        <span class="ggr-metric-value" id="ggr-keyword-density">
-                            0
-                        </span>
-
-                        <span class="ggr-metric-label">
-                            Keyword Density
-                        </span>
-
-                    </div>
+                    Your SEO Title Preview
 
                 </div>
 
-            </div>
+                <div
+                    id="ggr-serp-description"
+                    class="ggr-serp-description">
 
-        </div>
-
-        <!-- =========================================
-             Link Analysis
-        ========================================== -->
-
-        <div class="ggr-card">
-
-            <div class="ggr-card-header">
-                Link Analysis
-            </div>
-
-            <div class="ggr-card-body">
-
-                <div class="ggr-metric-grid">
-
-                    <div class="ggr-metric-card">
-
-                        <span class="ggr-metric-value" id="ggr-internal-links">
-                            0
-                        </span>
-
-                        <span class="ggr-metric-label">
-                            Internal Links
-                        </span>
-
-                    </div>
-
-                    <div class="ggr-metric-card">
-
-                        <span class="ggr-metric-value" id="ggr-external-links">
-                            0
-                        </span>
-
-                        <span class="ggr-metric-label">
-                            External Links
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- =========================================
-        Media SEO
-        ========================================== -->
-
-        <div class="ggr-card">
-
-            <div class="ggr-card-header">
-                Media SEO
-            </div>
-
-            <div class="ggr-card-body">
-
-                <div class="ggr-metric-grid">
-
-                    <div class="ggr-metric-card">
-
-                        <span class="ggr-metric-value" id="ggr-featured-image">
-                            0
-                        </span>
-
-                        <span class="ggr-metric-label">
-                            Featured Image
-                        </span>
-
-                    </div>
-
-                    <div class="ggr-metric-card">
-
-                        <span class="ggr-metric-value" id="ggr-images-count">
-                            0
-                        </span>
-
-                        <span class="ggr-metric-label">
-                            Images Found
-                        </span>
-
-                    </div>
-
-                    <div class="ggr-metric-card">
-
-                        <span class="ggr-metric-value" id="ggr-image-alt">
-                            0
-                        </span>
-
-                        <span class="ggr-metric-label">
-                            Missing ALT Tags
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- =========================================
-             Content Structure
-        ========================================== -->
-
-        <div class="ggr-card">
-
-            <div class="ggr-card-header">
-                Content Structure
-            </div>
-
-            <div class="ggr-card-body">
-
-                <div class="ggr-metric-grid">
-
-                    <div class="ggr-metric-card">
-
-                        <span class="ggr-metric-value" id="ggr-h2-count">
-                            0
-                        </span>
-
-                        <span class="ggr-metric-label">
-                            H2 Headings
-                        </span>
-
-                    </div>
-
-                    <div class="ggr-metric-card">
-
-                        <span class="ggr-metric-value" id="ggr-h3-count">
-                            0
-                        </span>
-
-                        <span class="ggr-metric-label">
-                            H3 Headings
-                        </span>
-
-                    </div>
+                    Your meta description preview will appear here.
 
                 </div>
 
@@ -628,5 +426,207 @@ $checks = $analysis['checks'];
         </div>
 
     </div>
+
+    <!-- =========================================
+             Content Analysis
+        ========================================== -->
+
+    <div class="ggr-card">
+
+        <div class="ggr-card-header">
+            Content Analysis
+        </div>
+
+        <div class="ggr-card-body">
+
+            <div class="ggr-metric-grid">
+
+                <div class="ggr-metric-card">
+
+                    <span class="ggr-metric-value" id="ggr-word-count">
+                        0
+                    </span>
+
+                    <span class="ggr-metric-label">
+                        Word Count
+                    </span>
+
+                </div>
+
+                <div class="ggr-metric-card">
+
+                    <span class="ggr-metric-value" id="ggr-keyword-occurrences">
+                        0
+                    </span>
+
+                    <span class="ggr-metric-label">
+                        Keyword Occurrences
+                    </span>
+
+                </div>
+
+                <div class="ggr-metric-card">
+
+                    <span class="ggr-metric-value" id="ggr-keyword-density">
+                        0
+                    </span>
+
+                    <span class="ggr-metric-label">
+                        Keyword Density
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================
+             Link Analysis
+        ========================================== -->
+
+    <div class="ggr-card">
+
+        <div class="ggr-card-header">
+            Link Analysis
+        </div>
+
+        <div class="ggr-card-body">
+
+            <div class="ggr-metric-grid">
+
+                <div class="ggr-metric-card">
+
+                    <span class="ggr-metric-value" id="ggr-internal-links">
+                        0
+                    </span>
+
+                    <span class="ggr-metric-label">
+                        Internal Links
+                    </span>
+
+                </div>
+
+                <div class="ggr-metric-card">
+
+                    <span class="ggr-metric-value" id="ggr-external-links">
+                        0
+                    </span>
+
+                    <span class="ggr-metric-label">
+                        External Links
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================
+        Media SEO
+        ========================================== -->
+
+    <div class="ggr-card">
+
+        <div class="ggr-card-header">
+            Media SEO
+        </div>
+
+        <div class="ggr-card-body">
+
+            <div class="ggr-metric-grid">
+
+                <div class="ggr-metric-card">
+
+                    <span class="ggr-metric-value" id="ggr-featured-image">
+                        0
+                    </span>
+
+                    <span class="ggr-metric-label">
+                        Featured Image
+                    </span>
+
+                </div>
+
+                <div class="ggr-metric-card">
+
+                    <span class="ggr-metric-value" id="ggr-images-count">
+                        0
+                    </span>
+
+                    <span class="ggr-metric-label">
+                        Images Found
+                    </span>
+
+                </div>
+
+                <div class="ggr-metric-card">
+
+                    <span class="ggr-metric-value" id="ggr-image-alt">
+                        0
+                    </span>
+
+                    <span class="ggr-metric-label">
+                        Missing ALT Tags
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================
+             Content Structure
+        ========================================== -->
+
+    <div class="ggr-card">
+
+        <div class="ggr-card-header">
+            Content Structure
+        </div>
+
+        <div class="ggr-card-body">
+
+            <div class="ggr-metric-grid">
+
+                <div class="ggr-metric-card">
+
+                    <span class="ggr-metric-value" id="ggr-h2-count">
+                        0
+                    </span>
+
+                    <span class="ggr-metric-label">
+                        H2 Headings
+                    </span>
+
+                </div>
+
+                <div class="ggr-metric-card">
+
+                    <span class="ggr-metric-value" id="ggr-h3-count">
+                        0
+                    </span>
+
+                    <span class="ggr-metric-label">
+                        H3 Headings
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 </div>
