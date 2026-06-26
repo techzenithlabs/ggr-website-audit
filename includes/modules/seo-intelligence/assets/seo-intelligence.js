@@ -37,6 +37,35 @@ jQuery(document).ready(function ($) {
       });
   });
 
+// ======================================
+// Section Toggle
+// ======================================
+
+$(document).ready(function () {
+
+    // Default collapsed
+    $(".ggr-collapsible > .ggr-card-body").hide();
+
+    $(".ggr-collapsible .ggr-section-arrow").text("▶");
+
+    $(".ggr-section-toggle").on("click", function (e) {
+
+        e.stopPropagation();
+
+        const $body = $(this).siblings(".ggr-card-body");
+
+        $body.slideToggle(200);
+
+        $(this)
+            .find(".ggr-section-arrow")
+            .text(function (_, text) {
+                return text === "▶" ? "▼" : "▶";
+            });
+
+    });
+
+});
+
   /*
   |--------------------------------------------------------------------------
   | Save Focus Keyword
@@ -762,13 +791,18 @@ jQuery(document).ready(function ($) {
 
     /*
     |--------------------------------------------------------------------------
-    | H2 / H3
+    | H1 / H2 / H3
     |--------------------------------------------------------------------------
     */
+   
+
+    let h1Count = tempDiv.querySelectorAll("h1").length;
 
     let h2Count = tempDiv.querySelectorAll("h2").length;
 
     let h3Count = tempDiv.querySelectorAll("h3").length;
+
+    updateMetric("#ggr-h1-count", h1Count);
 
     updateMetric("#ggr-h2-count", h2Count);
 

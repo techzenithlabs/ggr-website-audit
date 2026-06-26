@@ -50,8 +50,9 @@ $checks = $analysis['checks'];
 
         <div class="ggr-card">
 
-            <div class="ggr-card-header">
-                Focus Keyword
+            <div class="ggr-card-header ggr-section-toggle">
+                <span>Focus Keyword</span>
+                <span class="ggr-section-arrow">▼</span>
             </div>
 
             <div class="ggr-card-body">
@@ -97,13 +98,14 @@ $checks = $analysis['checks'];
         </div>
 
         <!-- =========================================
-       Quick Fixes
-    ========================================== -->
+         Quick Fixes
+       ========================================== -->
 
         <div class="ggr-card">
 
-            <div class="ggr-card-header">
-                Quick Fixes
+            <div class="ggr-card-header ggr-section-toggle">
+                <span>Quick Fixes</span>
+                <span class="ggr-section-arrow">▼</span>
             </div>
 
             <div class="ggr-card-body">
@@ -206,15 +208,22 @@ $checks = $analysis['checks'];
 
         <div class="ggr-card">
 
-            <div class="ggr-card-header">
+            <div class="ggr-card-header ggr-section-toggle">
+                <span> SEO Foundation</span>
 
-                SEO Foundation
+                <div class="ggr-section-header-right">
 
-                <span
-                    id="ggr-foundation-count"
-                    class="ggr-section-badge">
-                    0/8
-                </span>
+                    <span
+                        id="ggr-foundation-count"
+                        class="ggr-section-badge">
+                        0/8
+                    </span>
+
+                    <span class="ggr-section-arrow">
+                        ▼
+                    </span>
+
+                </div>
 
             </div>
 
@@ -306,15 +315,21 @@ $checks = $analysis['checks'];
 
         <div class="ggr-card">
 
-            <div class="ggr-card-header">
+            <div class="ggr-card-header ggr-section-toggle">
+                <span> SEO Snippet Optimization</span>
+                <div class="ggr-section-header-right">
 
-                SEO Snippet Optimization
+                    <span
+                        id="ggr-snippet-score"
+                        class="ggr-section-badge">
+                        0/2
+                    </span>
 
-                <span
-                    id="ggr-snippet-score"
-                    class="ggr-section-badge">
-                    0/2
-                </span>
+                    <span class="ggr-section-arrow">
+                        ▼
+                    </span>
+
+                </div>
 
             </div>
 
@@ -397,27 +412,29 @@ $checks = $analysis['checks'];
 
                 <div class="ggr-serp-preview">
 
-                    <<div
+                    <div
                         id="ggr-serp-url"
                         class="ggr-serp-url">
 
                         <?php echo esc_url(get_permalink($post->ID)); ?>
 
-                </div>
+                    </div>
 
-                <div
-                    id="ggr-serp-title"
-                    class="ggr-serp-title">
+                    <div
+                        id="ggr-serp-title"
+                        class="ggr-serp-title">
 
-                    Your SEO Title Preview
+                        Your SEO Title Preview
 
-                </div>
+                    </div>
 
-                <div
-                    id="ggr-serp-description"
-                    class="ggr-serp-description">
+                    <div
+                        id="ggr-serp-description"
+                        class="ggr-serp-description">
 
-                    Your meta description preview will appear here.
+                        Your meta description preview will appear here.
+
+                    </div>
 
                 </div>
 
@@ -425,55 +442,56 @@ $checks = $analysis['checks'];
 
         </div>
 
-    </div>
-
-    <!-- =========================================
+        <!-- =========================================
              Content Analysis
         ========================================== -->
 
-    <div class="ggr-card">
+        <div class="ggr-card">
 
-        <div class="ggr-card-header">
-            Content Analysis
-        </div>
+            <div class="ggr-card-header ggr-section-toggle">
+                <span> Content Analysis</span>
+                <span class="ggr-section-arrow">▼</span>
+            </div>
 
-        <div class="ggr-card-body">
+            <div class="ggr-card-body">
 
-            <div class="ggr-metric-grid">
+                <div class="ggr-metric-grid">
 
-                <div class="ggr-metric-card">
+                    <div class="ggr-metric-card">
 
-                    <span class="ggr-metric-value" id="ggr-word-count">
-                        0
-                    </span>
+                        <span class="ggr-metric-value" id="ggr-word-count">
+                            0
+                        </span>
 
-                    <span class="ggr-metric-label">
-                        Word Count
-                    </span>
+                        <span class="ggr-metric-label">
+                            Word Count
+                        </span>
 
-                </div>
+                    </div>
 
-                <div class="ggr-metric-card">
+                    <div class="ggr-metric-card">
 
-                    <span class="ggr-metric-value" id="ggr-keyword-occurrences">
-                        0
-                    </span>
+                        <span class="ggr-metric-value" id="ggr-keyword-occurrences">
+                            0
+                        </span>
 
-                    <span class="ggr-metric-label">
-                        Keyword Occurrences
-                    </span>
+                        <span class="ggr-metric-label">
+                            Keyword Occurrences
+                        </span>
 
-                </div>
+                    </div>
 
-                <div class="ggr-metric-card">
+                    <div class="ggr-metric-card">
 
-                    <span class="ggr-metric-value" id="ggr-keyword-density">
-                        0
-                    </span>
+                        <span class="ggr-metric-value" id="ggr-keyword-density">
+                            0
+                        </span>
 
-                    <span class="ggr-metric-label">
-                        Keyword Density
-                    </span>
+                        <span class="ggr-metric-label">
+                            Keyword Density
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -481,43 +499,44 @@ $checks = $analysis['checks'];
 
         </div>
 
-    </div>
-
-    <!-- =========================================
+        <!-- =========================================
              Link Analysis
         ========================================== -->
 
-    <div class="ggr-card">
+        <div class="ggr-card">
 
-        <div class="ggr-card-header">
-            Link Analysis
-        </div>
+            <div class="ggr-card-header ggr-section-toggle">
+                <span>Link Analysis</span>
+                <span class="ggr-section-arrow">▼</span>
+            </div>
 
-        <div class="ggr-card-body">
+            <div class="ggr-card-body">
 
-            <div class="ggr-metric-grid">
+                <div class="ggr-metric-grid">
 
-                <div class="ggr-metric-card">
+                    <div class="ggr-metric-card">
 
-                    <span class="ggr-metric-value" id="ggr-internal-links">
-                        0
-                    </span>
+                        <span class="ggr-metric-value" id="ggr-internal-links">
+                            0
+                        </span>
 
-                    <span class="ggr-metric-label">
-                        Internal Links
-                    </span>
+                        <span class="ggr-metric-label">
+                            Internal Links
+                        </span>
 
-                </div>
+                    </div>
 
-                <div class="ggr-metric-card">
+                    <div class="ggr-metric-card">
 
-                    <span class="ggr-metric-value" id="ggr-external-links">
-                        0
-                    </span>
+                        <span class="ggr-metric-value" id="ggr-external-links">
+                            0
+                        </span>
 
-                    <span class="ggr-metric-label">
-                        External Links
-                    </span>
+                        <span class="ggr-metric-label">
+                            External Links
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -525,55 +544,56 @@ $checks = $analysis['checks'];
 
         </div>
 
-    </div>
-
-    <!-- =========================================
+        <!-- =========================================
         Media SEO
         ========================================== -->
 
-    <div class="ggr-card">
+        <div class="ggr-card">
 
-        <div class="ggr-card-header">
-            Media SEO
-        </div>
+            <div class="ggr-card-header ggr-section-toggle">
+                <span>Media SEO</span>
+                <span class="ggr-section-arrow">▼</span>
+            </div>
 
-        <div class="ggr-card-body">
+            <div class="ggr-card-body">
 
-            <div class="ggr-metric-grid">
+                <div class="ggr-metric-grid">
 
-                <div class="ggr-metric-card">
+                    <div class="ggr-metric-card">
 
-                    <span class="ggr-metric-value" id="ggr-featured-image">
-                        0
-                    </span>
+                        <span class="ggr-metric-value" id="ggr-featured-image">
+                            0
+                        </span>
 
-                    <span class="ggr-metric-label">
-                        Featured Image
-                    </span>
+                        <span class="ggr-metric-label">
+                            Featured Image
+                        </span>
 
-                </div>
+                    </div>
 
-                <div class="ggr-metric-card">
+                    <div class="ggr-metric-card">
 
-                    <span class="ggr-metric-value" id="ggr-images-count">
-                        0
-                    </span>
+                        <span class="ggr-metric-value" id="ggr-images-count">
+                            0
+                        </span>
 
-                    <span class="ggr-metric-label">
-                        Images Found
-                    </span>
+                        <span class="ggr-metric-label">
+                            Images Found
+                        </span>
 
-                </div>
+                    </div>
 
-                <div class="ggr-metric-card">
+                    <div class="ggr-metric-card">
 
-                    <span class="ggr-metric-value" id="ggr-image-alt">
-                        0
-                    </span>
+                        <span class="ggr-metric-value" id="ggr-image-alt">
+                            0
+                        </span>
 
-                    <span class="ggr-metric-label">
-                        Missing ALT Tags
-                    </span>
+                        <span class="ggr-metric-label">
+                            Missing ALT Tags
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -581,43 +601,55 @@ $checks = $analysis['checks'];
 
         </div>
 
-    </div>
-
-    <!-- =========================================
+        <!-- =========================================
              Content Structure
         ========================================== -->
 
-    <div class="ggr-card">
+        <div class="ggr-card">
 
-        <div class="ggr-card-header">
-            Content Structure
-        </div>
+            <div class="ggr-card-header ggr-section-toggle">
+                <span>Content Structure</span>
+                <span class="ggr-section-arrow">▼</span>
+            </div>
 
-        <div class="ggr-card-body">
+            <div class="ggr-card-body">
 
-            <div class="ggr-metric-grid">
+                <div class="ggr-metric-grid">
+                    <div class="ggr-metric-card">
 
-                <div class="ggr-metric-card">
+                        <span class="ggr-metric-value" id="ggr-h1-count">
+                            0
+                        </span>
 
-                    <span class="ggr-metric-value" id="ggr-h2-count">
-                        0
-                    </span>
+                        <span class="ggr-metric-label">
+                            H1 Headings
+                        </span>
 
-                    <span class="ggr-metric-label">
-                        H2 Headings
-                    </span>
+                    </div>
 
-                </div>
+                    <div class="ggr-metric-card">
 
-                <div class="ggr-metric-card">
+                        <span class="ggr-metric-value" id="ggr-h2-count">
+                            0
+                        </span>
 
-                    <span class="ggr-metric-value" id="ggr-h3-count">
-                        0
-                    </span>
+                        <span class="ggr-metric-label">
+                            H2 Headings
+                        </span>
 
-                    <span class="ggr-metric-label">
-                        H3 Headings
-                    </span>
+                    </div>
+
+                    <div class="ggr-metric-card">
+
+                        <span class="ggr-metric-value" id="ggr-h3-count">
+                            0
+                        </span>
+
+                        <span class="ggr-metric-label">
+                            H3 Headings
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -626,7 +658,5 @@ $checks = $analysis['checks'];
         </div>
 
     </div>
-
-</div>
 
 </div>

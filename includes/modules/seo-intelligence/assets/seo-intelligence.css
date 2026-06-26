@@ -12,14 +12,11 @@ css
 
 .ggr-seo-intelligence {
 	background: #ffffff;
-	border: 1px solid #e2e8f0;
+	border: 1px solid #c3c4c7;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
 	border-radius: 16px;
 	overflow: hidden;
-	margin: 15px 0;
-
-	box-shadow:
-		0 4px 12px rgba(15, 23, 42, 0.04),
-		0 12px 30px rgba(15, 23, 42, 0.05);
+	margin: 15px 0;	
 }
 
 /* ============================================
@@ -80,6 +77,27 @@ css
 .ggr-arrow {
 	font-size: 14px;
 	color: #6b7280;
+}
+
+.ggr-section-toggle{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    user-select:none;
+}
+
+.ggr-section-arrow{
+    font-size:12px;
+    transition:all .25s ease;
+}
+
+.ggr-card.collapsed .ggr-section-arrow{
+    transform:rotate(-90deg);
+}
+
+.ggr-card.collapsed .ggr-card-body{
+    display:none;
 }
 
 /* ============================================
