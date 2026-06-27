@@ -21,6 +21,7 @@ class GGRWA_Plugin {
 
         $this->load_helpers();
         $this->load_seo_module();
+        $this->load_extra_modules();
         $this->load_admin();
         $this->load_engine();
         $this->load_frontend();
@@ -82,6 +83,36 @@ class GGRWA_Plugin {
         }
         if ( class_exists( 'GGRWA_PageSpeed' ) ) {
             GGRWA_PageSpeed::register_ajax();
+        }
+    }
+
+    /**
+     * Load Content Analyzer and Conversion Audit modules.
+     * Files are required here (early) so AJAX hooks register before admin_menu.
+     * Instantiation is handled by GGRWA_Admin::load_modules() to avoid duplicates.
+     */
+    private function load_extra_modules() {
+
+        $modules = [
+            'content-analyzer' => [
+                'file'  => 'includes/modules/content-analyzer/class-content-analyzer.php',
+                'class' => 'GGRWA_Content_Analyzer',
+            ],
+            'conversion-audit' => [
+                'file'  => 'includes/modules/conversion-audit/class-conversion-audit.php',
+                'class' => 'GGRWA_Conversion_Audit',
+            ],
+        ];
+
+        foreach ( $modules as $mod ) {
+            $path = GGRWA_PLUGIN_PATH . $mod['file'];
+            if ( file_exists( $path ) ) {
+                require_once $path;
+            }
+            $class = $mod['class'];
+            if ( class_exists( $class ) && method_exists( $class, 'register_ajax' ) ) {
+                $class::register_ajax();
+            }
         }
     }
 

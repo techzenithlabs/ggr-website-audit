@@ -142,6 +142,14 @@ class GGRWA_Admin
                     ['ggr-google-fonts'],
                     GGRWA_VERSION
                 );
+
+                // Shared sapc-* design system used by Content Analyzer & Conversion Audit
+                wp_enqueue_style(
+                    'ggr-seo-audit-css',
+                    GGRWA_PLUGIN_URL . 'includes/modules/seo-audit/assets/seo-audit.css',
+                    ['ggr-admin-css'],
+                    GGRWA_VERSION
+                );
         }
         // Utils
         wp_enqueue_script(
@@ -234,14 +242,8 @@ class GGRWA_Admin
             );
         }
 
-        // Enqueue SEO Audit assets on the main dashboard page.
+        // Enqueue SEO Audit JS assets on the main dashboard page.
         if ($hook === 'toplevel_page_ggrwa-audit-dashboard') {
-            wp_enqueue_style(
-                'ggr-seo-audit-css',
-                GGRWA_PLUGIN_URL . 'includes/modules/seo-audit/assets/seo-audit.css',
-                [],
-                GGRWA_VERSION
-            );
             wp_enqueue_script(
                 'ggr-seo-audit-js',
                 GGRWA_PLUGIN_URL . 'includes/modules/seo-audit/assets/seo-audit.js',
